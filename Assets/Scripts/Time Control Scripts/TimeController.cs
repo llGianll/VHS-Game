@@ -13,6 +13,8 @@ public class TimeController : MonoBehaviour
     public Action OnRewind = delegate { };
     public Action OnResume = delegate { };
 
+    [SerializeField] bool _manualRewind = false;
+
     [Header("Time variables")]
     [SerializeField] float _rewindTime = 5f;
     [SerializeField] float _rewindSpeedMult = 5;
@@ -41,39 +43,62 @@ public class TimeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (_manualRewind)
         {
-            //IsRewinding = true;
-            //StartCoroutine(RewindTimer());
-            //OnRewind();
-            //Debug.Log("------Rewind------");
+            //for testing only 
+            ManualRewindOnKeyPress();
         }
-
-        //if (Input.GetKeyUp(KeyCode.Return))
-        //{
-        //    IsRewinding = false;
-        //    OnResume();
-        //    Debug.Log("------Resume------");
-        //}
 
         if (IsRewinding)
         {
-            Timer -= Time.deltaTime * _rewindSpeedMult;
-            Timer = Mathf.Clamp(Timer, 0, Mathf.Infinity);
-
-            if (Timer <= 0)
-                IsRewinding = false;
+            DecreaseTimer();
 
         }
         else
-            Timer += Time.deltaTime;
-
+            IncreaseTimer();
 
         UpdateStatusUI();
     }
 
+    private void IncreaseTimer()
+    {
+        Timer += Time.deltaTime;
+    }
+
+    private void DecreaseTimer()
+    {
+        Timer -= Time.deltaTime * _rewindSpeedMult;
+        Timer = Mathf.Clamp(Timer, 0, Mathf.Infinity);
+
+        if (Timer <= 0)
+            IsRewinding = false;
+    }
+
+    private void ManualRewindOnKeyPress()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            IsRewinding = true;
+            StartCoroutine(RewindTimer());
+            OnRewind();
+            Debug.Log("------Rewind------");
+        }
+        else if (Input.GetKeyUp(KeyCode.Return))
+        {
+            IsRewinding = false;
+            OnResume();
+            Debug.Log("------Resume------");
+        }
+        else
+            IncreaseTimer();
+
+    }
+
     public void Rewind()
     {
+        if (_manualRewind)
+            return;
+
         IsRewinding = true;
         StartCoroutine(RewindTimer());
     }

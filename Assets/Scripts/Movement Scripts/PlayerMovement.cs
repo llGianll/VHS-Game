@@ -23,6 +23,14 @@ public class PlayerMovement : MonoBehaviour
     private float setSlopeLimit;
 
     Vector3 velocity;
+    private Vector3 _netVelocity;
+
+    public Vector3 NetVelocity
+    {
+        // getter/setter for CharacterControllerRewind script
+        get { return _netVelocity; }
+        set { _netVelocity = value; }
+    } 
 
     private void Awake()
     {
@@ -65,7 +73,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         velocity.y += gravity * Time.deltaTime;
+        _netVelocity = velocity * Time.deltaTime;
 
-        characterController.Move(velocity * Time.deltaTime);
+        characterController.Move(_netVelocity);
     }
 }

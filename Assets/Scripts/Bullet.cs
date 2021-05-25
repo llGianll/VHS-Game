@@ -57,7 +57,15 @@ public class Bullet : MonoBehaviour, IRewindable
         //gameObject.SetActive(false);
         _isActive = false;
 
-        if (collision.gameObject.GetComponent<CubeMover>())
+        if (collision.gameObject.GetComponent<PlayerMovement>())
+            TimeController.Instance.Rewind();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        _isActive = false;
+
+        if (other.GetComponent<PlayerMovement>())
             TimeController.Instance.Rewind();
     }
 
