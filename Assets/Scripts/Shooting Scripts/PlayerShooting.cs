@@ -3,7 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerShooting : MonoBehaviour
+public class ShootingTimePoint
+{
+    //public currentFireTime
+    public int CurrentAmmoInMag;
+    public bool IsReloading;
+    public float ReloadTimer;
+
+    public ShootingTimePoint(int currentAmmoInMag, bool isReloading, float reloadTimer)
+    {
+        this.CurrentAmmoInMag = currentAmmoInMag;
+        this.IsReloading = isReloading;
+        this.ReloadTimer = reloadTimer;
+    }
+}
+
+public class PlayerShooting : MonoBehaviour, IRewindable
 {
     //semi-auto pistol for now 
 
@@ -16,44 +31,61 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] float _maxFireRate = 0.25f;
 
     int _currentAmmoInMag;
-    float _currentTime;
+    float _currentFireTime;
+    float _reloadTimer;
     bool _isReloading;
     Coroutine _reloadCoroutine;
 
     public bool IsReloading { get { return _isReloading; } }
+    public int CurrentAmmoInMag { get { return _currentAmmoInMag; } }
+    public int MagCapacity { get { return _magCapacity; } }
 
-    public Action<int, int> OnFire = delegate{};
+    //public Action<int, int> OnFire = delegate{};
     public Action<float, float> OnReload = delegate { };
     public Action<int, int> OnFinishedReload = delegate{};
 
+    List<ShootingTimePoint> _timePoints = new List<ShootingTimePoint>();
+
     private void Start()
     {
+        TimeController.Instance.OnRewind += Rewind;
+        TimeController.Instance.OnResume += StopRewind;
+
         _currentAmmoInMag = _magCapacity;
-        _currentTime = _maxFireRate;
+        _currentFireTime = _maxFireRate;
+        _reloadTimer = 0;
     }
 
     private void Update()
     {
         DrawRay();
 
-        _currentTime += Time.deltaTime;
+        _currentFireTime += Time.deltaTime;
 
-        if (Input.GetButtonDown("Fire1") && _currentTime >= _maxFireRate)
-            Fire();
+        if (!TimeController.Instance.IsRewinding)
+        {
+            if (Input.GetButtonDown("Fire1") && _currentFireTime >= _maxFireRate)
+                Fire();
+            else if (Input.GetKeyDown(KeyCode.R) && _currentAmmoInMag != _magCapacity && !_isReloading)
+                _reloadCoroutine = StartCoroutine(Reload(0));
 
-        if (Input.GetKeyDown(KeyCode.R) && _currentAmmoInMag != _magCapacity && !_isReloading)
-            _reloadCoroutine = StartCoroutine(Reload());
+            RecordTimePoints();
+        }
+        else
+        {
+            RewindTimePoints();
+        }
     }
 
-    private IEnumerator Reload()
+    private IEnumerator Reload(float startTimer)
     {
-        float timer = 0; 
+        _reloadTimer = startTimer; 
         _isReloading = true;
 
-        while(timer < _reloadSpeed)
+        while(_reloadTimer < _reloadSpeed)
         {
-            timer += Time.deltaTime;
-            OnReload(timer, _reloadSpeed);
+            _reloadTimer += Time.deltaTime;
+            OnReload(_reloadTimer, _reloadSpeed);
             yield return null;
         }
         _isReloading = false;
@@ -80,16 +112,66 @@ public class PlayerShooting : MonoBehaviour
         RaycastHit hit;
         Physics.Raycast(_shootingCamera.transform.position, _shootingCamera.transform.forward, out hit, _range);
 
-        _currentTime = 0;
+        _currentFireTime = 0;
         _currentAmmoInMag--;
-        OnFire(_currentAmmoInMag, _magCapacity);
+        //OnFire(_currentAmmoInMag, _magCapacity);
 
         if (hit.collider != null && hit.collider.GetComponent<IShootable>() != null)
-            hit.collider.GetComponent<IShootable>().Hit();
+            hit.collider.GetComponent<IShootable>().Hit(_damagePerBullet);
 
         //auto reload 
         if (_currentAmmoInMag == 0)
-            StartCoroutine(Reload());
+            StartCoroutine(Reload(0));
 
+    }
+
+    public void Rewind()
+    {
+
+    }
+
+    public void StopRewind()
+    {
+        if (_isReloading)
+        {
+            _reloadCoroutine = StartCoroutine(Reload(_reloadTimer));
+        }
+    }
+
+    public void RewindTimePoints()
+    {
+        if (_timePoints.Count > 0)
+        {
+            int timeIndex = (int)TimeController.Instance.RewindSpeedMult;
+
+            if (_timePoints.Count < timeIndex)
+            {
+                SetTimePoint(_timePoints[0]);
+                _timePoints.Clear();
+            }
+            else
+            {
+                SetTimePoint(_timePoints[_timePoints.Count - timeIndex]);
+                for (int i = 0; i < timeIndex; i++)
+                {
+                    _timePoints.RemoveAt(_timePoints.Count - 1);
+                }
+            }
+
+        }
+        else
+            StopRewind();
+    }
+
+    public void RecordTimePoints()
+    {
+        _timePoints.Add(new ShootingTimePoint(_currentAmmoInMag, _isReloading, _reloadTimer));
+    }
+
+    private void SetTimePoint(ShootingTimePoint timePoint)
+    {
+        _currentAmmoInMag = timePoint.CurrentAmmoInMag;
+        _isReloading = timePoint.IsReloading;
+        _reloadTimer = timePoint.ReloadTimer;
     }
 }

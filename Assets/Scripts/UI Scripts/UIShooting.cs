@@ -20,9 +20,9 @@ public class UIShooting : MonoBehaviour
     {
         if(_playerShooting != null)
         {
-            _playerShooting.OnFire += UpdateAmmoCount;
+            //_playerShooting.OnFire += UpdateAmmoCount;
             _playerShooting.OnReload += UpdateReloadBar;
-            _playerShooting.OnFinishedReload += UpdateAmmoCount;
+            //_playerShooting.OnFinishedReload += UpdateAmmoCount;
         }
     }
 
@@ -45,6 +45,7 @@ public class UIShooting : MonoBehaviour
     void Update()
     {
         _reloadBar.gameObject.SetActive(_playerShooting.IsReloading);
+        UpdateAmmoCount(_playerShooting.CurrentAmmoInMag, _playerShooting.MagCapacity);
 
     }
 }

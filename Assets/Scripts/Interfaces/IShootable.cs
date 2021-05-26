@@ -1,4 +1,4 @@
 ﻿public interface IShootable
 {
-    void Hit();
+    void Hit(float damage);
 }

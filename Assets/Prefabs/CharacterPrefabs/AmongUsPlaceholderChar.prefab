@@ -512,7 +512,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerObject: {fileID: 8484958779255629427}
-  mouseSensitivity: 10
+  mouseSensitivity: 5
   yAxisClampNegative: -90
   yAxisClampPositive: 90
 --- !u!114 &3341650630197352423
@@ -711,6 +711,7 @@ GameObject:
   - component: {fileID: 1244378845}
   - component: {fileID: 8484958779255629426}
   - component: {fileID: 1244378846}
+  - component: {fileID: 1255053212}
   m_Layer: 0
   m_Name: AmongUsPlaceholderChar
   m_TagString: Player
@@ -780,7 +781,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.65
+  m_Radius: 0.85
   m_Height: 2.75
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -817,3 +818,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe6c7626b6a6e384ea118648e45c02a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1255053212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8484958779255629429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53d46a234a6bc9043ab8ec82f8ffd013, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shootingCamera: {fileID: 8484958778521241436}
+  _damagePerBullet: 10
+  _range: 100
+  _magCapacity: 10
+  _reloadSpeed: 0.5
+  _maxFireRate: 0.1
