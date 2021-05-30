@@ -424,7 +424,6 @@ GameObject:
   - component: {fileID: 8484958778521241435}
   - component: {fileID: 8484958778521241436}
   - component: {fileID: 8484958778521241437}
-  - component: {fileID: 8484958778521241434}
   - component: {fileID: 3341650630197352423}
   m_Layer: 0
   m_Name: Main Camera
@@ -470,9 +469,9 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.01
   far clip plane: 1000
-  field of view: 60
+  field of view: 70
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -498,22 +497,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8484958778521241438}
   m_Enabled: 1
---- !u!114 &8484958778521241434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8484958778521241438}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f3940705593cfc48b2563c2efa416f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerObject: {fileID: 8484958779255629427}
-  mouseSensitivity: 100
-  yAxisClampNegative: -90
-  yAxisClampPositive: 90
 --- !u!114 &3341650630197352423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -695,8 +678,9 @@ GameObject:
   - component: {fileID: 8484958779255629427}
   - component: {fileID: 8484958779255629428}
   - component: {fileID: 8484958779255629426}
+  - component: {fileID: 1377221618}
   m_Layer: 0
-  m_Name: AmongUsPlaceholderChar
+  m_Name: CharacterControllerAmongUsPlaceholder
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -755,7 +739,24 @@ MonoBehaviour:
   groundDistance: 0.4
   groundMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   playerSpeed: 12
   jumpHeight: 3
   gravity: -9.8
+--- !u!114 &1377221618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8484958779255629429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f3940705593cfc48b2563c2efa416f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerObject: {fileID: 8484958779255629427}
+  mouseSensitivityX: 100
+  mouseSensitivityY: 100
+  yAxisClampNegative: -90
+  yAxisClampPositive: 90
