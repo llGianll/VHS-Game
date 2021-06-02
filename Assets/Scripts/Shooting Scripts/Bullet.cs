@@ -57,7 +57,7 @@ public class Bullet : MonoBehaviour, IRewindable
         //gameObject.SetActive(false);
         _isActive = false;
 
-        if (collision.gameObject.GetComponent<PlayerMovement>())
+        if (collision.gameObject.GetComponent<CharacterControllerPlayerMovement>())
             TimeController.Instance.Rewind();
     }
 
@@ -65,7 +65,7 @@ public class Bullet : MonoBehaviour, IRewindable
     {
         _isActive = false;
 
-        if (other.GetComponent<PlayerMovement>())
+        if (other.GetComponent<CharacterControllerPlayerMovement>())
             TimeController.Instance.Rewind();
     }
 

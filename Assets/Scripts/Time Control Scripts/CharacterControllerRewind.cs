@@ -6,14 +6,14 @@ using UnityEngine;
 public class CharacterControllerRewind : MonoBehaviour, IRewindable
 {
     List<TimePoint> _timePoints = new List<TimePoint>();
-    PlayerMovement _playerMovement;
+    CharacterControllerPlayerMovement _playerMovement;
     CharacterController _characterController;
 
     //[NOTE] this script is currently tightly coupled with PlayerMovement, decouple if necessary
 
     private void Awake()
     {
-        _playerMovement = GetComponent<PlayerMovement>();
+        _playerMovement = GetComponent<CharacterControllerPlayerMovement>();
         _characterController = GetComponent<CharacterController>();
     }
 

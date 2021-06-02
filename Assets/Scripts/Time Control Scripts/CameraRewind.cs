@@ -5,11 +5,11 @@ using UnityEngine;
 public class CameraRewind : MonoBehaviour, IRewindable
 {
     List<Quaternion> _cameraRotations = new List<Quaternion>();
-    MouseLook _mouseLook;
+    CharacterControllerMouseLook _mouseLook;
 
     private void Awake()
     {
-        _mouseLook = GetComponent<MouseLook>();
+        _mouseLook = GetComponent<CharacterControllerMouseLook>();
     }
 
     // Start is called before the first frame update
