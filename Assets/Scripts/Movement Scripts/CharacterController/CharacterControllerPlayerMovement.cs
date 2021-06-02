@@ -2,19 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class CharacterControllerPlayerMovement : MonoBehaviour
 {
     [SerializeField]
     CharacterController characterController;
 
     [SerializeField]
     Transform groundCheck;
+
+    [SerializeField]
+    LayerMask groundMask;
     public float groundDistance = 0.4f;
-    public LayerMask groundMask;
     bool isGrounded;
 
     float xMovement;
     float zMovement;
+
+    Vector3 movementDirection;
 
     public float playerSpeed = 12f;
     public float jumpHeight = 3f;
@@ -57,9 +61,9 @@ public class PlayerMovement : MonoBehaviour
         xMovement = Input.GetAxisRaw("Horizontal");
         zMovement = Input.GetAxisRaw("Vertical");
 
-        Vector3 movement = Vector3.Normalize(transform.right * xMovement + transform.forward * zMovement);
+        movementDirection = transform.right * xMovement + transform.forward * zMovement;
 
-        characterController.Move(movement * playerSpeed * Time.deltaTime);
+        characterController.Move(movementDirection.normalized * playerSpeed * Time.deltaTime);
 
         if(Input.GetButtonDown("Jump") && isGrounded)
         {
