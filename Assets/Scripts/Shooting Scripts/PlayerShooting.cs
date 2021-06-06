@@ -30,6 +30,10 @@ public class PlayerShooting : MonoBehaviour, IRewindable
     [SerializeField] float _reloadSpeed = 1f;
     [SerializeField] float _maxFireRate = 0.25f;
 
+    [Header("Shoot Audio Clips")]
+    [SerializeField] AudioClip _shootSFX;
+    [SerializeField] AudioClip _reloadSFX;
+
     int _currentAmmoInMag;
     float _currentFireTime;
     float _reloadTimer;
@@ -45,6 +49,12 @@ public class PlayerShooting : MonoBehaviour, IRewindable
     public Action<int, int> OnFinishedReload = delegate{};
 
     List<ShootingTimePoint> _timePoints = new List<ShootingTimePoint>();
+    private AudioSource _audioSource;
+
+    private void Awake()
+    {
+        _audioSource = GetComponent<AudioSource>();
+    }
 
     private void Start()
     {
@@ -82,7 +92,9 @@ public class PlayerShooting : MonoBehaviour, IRewindable
         _reloadTimer = startTimer; 
         _isReloading = true;
 
-        while(_reloadTimer < _reloadSpeed)
+        PlaySFX(_reloadSFX);
+
+        while (_reloadTimer < _reloadSpeed)
         {
             _reloadTimer += Time.deltaTime;
             OnReload(_reloadTimer, _reloadSpeed);
@@ -109,12 +121,15 @@ public class PlayerShooting : MonoBehaviour, IRewindable
             StopCoroutine(_reloadCoroutine);
             _isReloading = false;
         }
+
         RaycastHit hit;
         Physics.Raycast(_shootingCamera.transform.position, _shootingCamera.transform.forward, out hit, _range);
 
         _currentFireTime = 0;
         _currentAmmoInMag--;
         //OnFire(_currentAmmoInMag, _magCapacity);
+
+        PlaySFX(_shootSFX);
 
         if (hit.collider != null && hit.collider.GetComponent<IShootable>() != null)
             hit.collider.GetComponent<IShootable>().Hit(_damagePerBullet);
@@ -123,6 +138,12 @@ public class PlayerShooting : MonoBehaviour, IRewindable
         if (_currentAmmoInMag == 0)
             StartCoroutine(Reload(0));
 
+    }
+
+    private void PlaySFX(AudioClip clip)
+    {
+        _audioSource.clip = clip;
+        _audioSource.Play();
     }
 
     public void Rewind()

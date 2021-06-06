@@ -424,7 +424,6 @@ GameObject:
   - component: {fileID: 8484958778521241435}
   - component: {fileID: 8484958778521241436}
   - component: {fileID: 8484958778521241437}
-  - component: {fileID: 8484958778521241434}
   - component: {fileID: 3341650630197352423}
   - component: {fileID: 1831216692}
   m_Layer: 0
@@ -499,22 +498,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8484958778521241438}
   m_Enabled: 1
---- !u!114 &8484958778521241434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8484958778521241438}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f3940705593cfc48b2563c2efa416f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerObject: {fileID: 8484958779255629427}
-  mouseSensitivity: 5
-  yAxisClampNegative: -90
-  yAxisClampPositive: 90
 --- !u!114 &3341650630197352423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -553,7 +536,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8484958778521241438}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf52252e81932504790499f5c0858f35, type: 3}
   m_Name: 
@@ -712,8 +695,10 @@ GameObject:
   - component: {fileID: 8484958779255629426}
   - component: {fileID: 1244378846}
   - component: {fileID: 1255053212}
+  - component: {fileID: 867548778}
+  - component: {fileID: 867548785}
   m_Layer: 0
-  m_Name: AmongUsPlaceholderChar
+  m_Name: CharacterControllerAmongUsPlaceholder
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -799,10 +784,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterController: {fileID: 8484958779255629428}
   groundCheck: {fileID: 8484958778647603879}
-  groundDistance: 0.4
   groundMask:
     serializedVersion: 2
     m_Bits: 512
+  groundDistance: 0.4
   playerSpeed: 12
   jumpHeight: 3
   gravity: -9.8
@@ -836,3 +821,32 @@ MonoBehaviour:
   _magCapacity: 10
   _reloadSpeed: 0.5
   _maxFireRate: 0.1
+--- !u!114 &867548778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8484958779255629429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf52252e81932504790499f5c0858f35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &867548785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8484958779255629429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f3940705593cfc48b2563c2efa416f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerObject: {fileID: 8484958779255629427}
+  mouseSensitivityX: 10
+  mouseSensitivityY: 10
+  yAxisClampNegative: -90
+  yAxisClampPositive: 90

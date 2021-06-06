@@ -27,12 +27,16 @@ public class TimeController : MonoBehaviour
     [SerializeField] Sprite _rewindIcon;
     [SerializeField] Text _timerText;
 
+    private AudioSource _audioSource;
+
     private void Awake()
     {
         if (Instance == null)
             Instance = this;
         else
             Destroy(gameObject);
+
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -105,6 +109,7 @@ public class TimeController : MonoBehaviour
 
     private IEnumerator RewindTimer()
     {
+        _audioSource.Play();
         OnRewind();
         Debug.Log("------Rewind------");
         yield return new WaitForSeconds(_rewindTime/_rewindSpeedMult); //potential time inaccuracy problem 
