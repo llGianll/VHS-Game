@@ -28,9 +28,14 @@ public class RigidbodyPlayerMovement : MonoBehaviour
 
     public float playerJumpHeight = 3f;
     public float playerGroundDrag = 12f;
-    public float playerAirDrag = 3f;
+    public float playerAirDrag = 1f;
+
+    public float playerGravity = -20f;
 
     RaycastHit slopeHit;
+
+    Transform mainCameraHolder;
+
     private bool OnSlope()
     {
         if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight / 2 + 0.5f))
@@ -55,7 +60,8 @@ public class RigidbodyPlayerMovement : MonoBehaviour
     float xMovement;
     float zMovement;
 
-    
+    float storedGravityVal;
+
 
 
 
@@ -64,11 +70,16 @@ public class RigidbodyPlayerMovement : MonoBehaviour
     {
         rigidBody.freezeRotation = true;
         playerHeight = GetComponent<CapsuleCollider>().height;
+        rigidBody.useGravity = false;
+        storedGravityVal = playerGravity;
+        mainCameraHolder = GameObject.Find("RigidbodyCameraHolder").transform;
     }
 
     // Update is called once per frame
     void Update()
     {
+        rigidBody.AddForce(Vector3.down * -playerGravity, ForceMode.Force);
+
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         xMovement = Input.GetAxisRaw("Horizontal");
@@ -81,7 +92,7 @@ public class RigidbodyPlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
-            playerJump();
+            PlayerJump();
         }
 
         slopeMovementDirection = Vector3.ProjectOnPlane(movementDirection, slopeHit.normal);
@@ -134,13 +145,24 @@ public class RigidbodyPlayerMovement : MonoBehaviour
         
     }
 
-    void playerJump()
+    void PlayerJump()
     {
         if (isGrounded)
         {
             Debug.Log("everybody jump");
+            //Vector3 jumpDirection = new Vector3 (mainCameraHolder.forward.x, transform.up.y, mainCameraHolder.forward.z);
             rigidBody.velocity = new Vector3(rigidBody.velocity.x, 0, rigidBody.velocity.z);
+            //rigidBody.AddForce(jumpDirection * playerJumpHeight, ForceMode.Impulse);
             rigidBody.AddForce(transform.up * playerJumpHeight, ForceMode.Impulse);
         }
+    }
+
+    public void GravityOff()
+    {
+        playerGravity = 0f;
+    }
+    public void GravityOn()
+    {
+        playerGravity = storedGravityVal;
     }
 }
