@@ -142,6 +142,9 @@ public class PlayerShooting : MonoBehaviour, IRewindable
 
     private void PlaySFX(AudioClip clip)
     {
+        if (_audioSource == null)
+            return;
+
         _audioSource.clip = clip;
         _audioSource.Play();
     }

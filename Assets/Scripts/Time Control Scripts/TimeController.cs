@@ -103,13 +103,22 @@ public class TimeController : MonoBehaviour
         if (_manualRewind)
             return;
 
-        IsRewinding = true;
         StartCoroutine(RewindTimer());
     }
 
     private IEnumerator RewindTimer()
     {
-        _audioSource.Play();
+        Time.timeScale = 0;
+
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        Time.timeScale = 1;
+
+        IsRewinding = true;
+
+        if (_audioSource != null)
+            _audioSource.Play();
+
         OnRewind();
         Debug.Log("------Rewind------");
         yield return new WaitForSeconds(_rewindTime/_rewindSpeedMult); //potential time inaccuracy problem 

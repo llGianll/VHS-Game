@@ -16,7 +16,9 @@ public class RigidbodyMouseLook : MonoBehaviour
     float mouseY;
 
     private float xRotation = 0f;
-    private float yRotation = 0f;
+
+    [HideInInspector]
+    public float yRotation = 0f; //need this data to be recorded and manipulated by camera rewind script
 
     public float yAxisClampNegative = -90f;
     public float yAxisClampPositive = 90f;
@@ -40,7 +42,7 @@ public class RigidbodyMouseLook : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, yAxisClampNegative, yAxisClampPositive);
 
         playerCamHolder.transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-        orientation.transform.rotation = Quaternion.Euler(0, yRotation, 0);
+        orientation.transform.rotation = Quaternion.Euler(0, yRotation, 0);//the piece of code rotating player's body
 
     }
 }

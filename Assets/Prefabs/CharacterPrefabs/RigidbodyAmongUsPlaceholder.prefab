@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 5720572073849777377}
   - component: {fileID: 5720572073849777379}
   - component: {fileID: 5720572073849777376}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Backpack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 5720572074169228553}
   - component: {fileID: 5720572074169228555}
   - component: {fileID: 5720572074169228552}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Leg 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -204,7 +204,7 @@ GameObject:
   - component: {fileID: 5720572074502179594}
   - component: {fileID: 5720572074502179595}
   - component: {fileID: 5720572074502179592}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -283,7 +283,7 @@ GameObject:
   - component: {fileID: 5720572075145058643}
   - component: {fileID: 5720572075145058645}
   - component: {fileID: 5720572075145058642}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Leg 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -362,7 +362,7 @@ GameObject:
   - component: {fileID: 5720572075301823543}
   - component: {fileID: 5720572075301823545}
   - component: {fileID: 5720572075301823542}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Visor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -444,6 +444,8 @@ GameObject:
   - component: {fileID: 8159035430993920798}
   - component: {fileID: 5720572075478315514}
   - component: {fileID: 5720572075478315512}
+  - component: {fileID: 1878094530}
+  - component: {fileID: 1878094531}
   m_Layer: 0
   m_Name: RigidbodyAmongUsPlaceholder
   m_TagString: Player
@@ -510,7 +512,7 @@ MonoBehaviour:
   playerAcceleration: 10
   playerSpeedMultiplier: 10
   playerAirMultiplier: 0.4
-  playerJumpHeight: 20
+  playerJumpHeight: 25
   playerGroundDrag: 12
   playerAirDrag: 2
   playerGravity: -20
@@ -544,6 +546,7 @@ MonoBehaviour:
   orientation: {fileID: 8159035430570654783}
   mouseSensitivityX: 20
   mouseSensitivityY: 20
+  yRotation: 0
   yAxisClampNegative: -90
   yAxisClampPositive: 90
 --- !u!114 &5720572075478315512
@@ -560,11 +563,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orientation: {fileID: 8159035430570654783}
   rigidbodyPlayerMovement: {fileID: 8159035430993920797}
-  wallDistance: 0.75
+  wallDistance: 1
   minimumJumpHeight: 1.5
-  wallRunGravity: -9.8
-  wallRunJumpForce: 10
+  wallRunGravity: -1
+  wallRunJumpForce: 17
   wallRunTimer: 2
+--- !u!114 &1878094530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5720572075478315515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ee61ac3279846e4cb79008cac7eb7f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1878094531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5720572075478315515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf52252e81932504790499f5c0858f35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cameraHolder_T: {fileID: 0}
 --- !u!1 &7893225733585656810
 GameObject:
   m_ObjectHideFlags: 0

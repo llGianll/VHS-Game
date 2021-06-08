@@ -4,12 +4,30 @@ using UnityEngine;
 
 public class CameraRewind : MonoBehaviour, IRewindable
 {
-    List<Quaternion> _cameraRotations = new List<Quaternion>();
-    CharacterControllerMouseLook _mouseLook;
+    #region CameraTimePoint nested class
+
+    public class CameraTimePoint
+    {
+        public Quaternion CameraRotation;
+        public float YRotation;
+
+        public CameraTimePoint(Quaternion cameraRotation, float yRotation)
+        {
+            CameraRotation = cameraRotation;
+            YRotation = yRotation;
+        }
+    }
+
+    #endregion
+
+    List<CameraTimePoint> _cameraTimePoints = new List<CameraTimePoint>();
+    RigidbodyMouseLook _mouseLook;
+    [SerializeField] Transform _cameraHolder_T;
+
 
     private void Awake()
     {
-        _mouseLook = GetComponent<CharacterControllerMouseLook>();
+        _mouseLook = GetComponent<RigidbodyMouseLook>();
     }
 
     // Start is called before the first frame update
@@ -30,21 +48,21 @@ public class CameraRewind : MonoBehaviour, IRewindable
 
     public void RewindTimePoints()
     {
-        if (_cameraRotations.Count > 0)
+        if (_cameraTimePoints.Count > 0)
         {
             int timeIndex = (int)TimeController.Instance.RewindSpeedMult;
 
-            if (_cameraRotations.Count < timeIndex)
+            if (_cameraTimePoints.Count < timeIndex)
             {
-                SetRotation(_cameraRotations[0]);
-                _cameraRotations.Clear();
+                SetCameraTimePoint(_cameraTimePoints[0]);
+                _cameraTimePoints.Clear();
             }
             else
             {
-                SetRotation(_cameraRotations[_cameraRotations.Count - timeIndex]);
+                SetCameraTimePoint(_cameraTimePoints[_cameraTimePoints.Count - timeIndex]);
                 for (int i = 0; i < timeIndex; i++)
                 {
-                    _cameraRotations.RemoveAt(_cameraRotations.Count - 1);
+                    _cameraTimePoints.RemoveAt(_cameraTimePoints.Count - 1);
                 }
             }
 
@@ -55,7 +73,8 @@ public class CameraRewind : MonoBehaviour, IRewindable
 
     public void RecordTimePoints()
     {
-        _cameraRotations.Add(transform.rotation);
+        CameraTimePoint timePoint = new CameraTimePoint(_cameraHolder_T.rotation, _mouseLook.yRotation);
+        _cameraTimePoints.Add(timePoint);
     }
 
     public void Rewind()
@@ -68,8 +87,9 @@ public class CameraRewind : MonoBehaviour, IRewindable
         _mouseLook.enabled = true;
     }
 
-    private void SetRotation(Quaternion cameraRotation)
+    private void SetCameraTimePoint(CameraTimePoint timePoint)
     {
-        transform.rotation = cameraRotation;
+        _cameraHolder_T.rotation = timePoint.CameraRotation;
+        _mouseLook.yRotation = timePoint.YRotation;
     }
 }
