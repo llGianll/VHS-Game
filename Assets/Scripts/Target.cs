@@ -22,21 +22,28 @@ public class Target : MonoBehaviour, IShootable, IRewindable
 
     private void Start()
     {
-        TimeController.Instance.OnRewind += Rewind;
-        TimeController.Instance.OnResume += StopRewind;
+        TimeControllerEventsInit();
 
         _currentHP = _maxHP;
         _originalColor = _meshRenderer.material.color;
+    }
+
+    private void TimeControllerEventsInit()
+    {
+        TimeController.Instance.OnRewindBegin += Rewind;
+        TimeController.Instance.OnRewindEnd += StopRewind;
+        TimeController.Instance.OnRewindUpdate += RewindTimePoints;
+        TimeController.Instance.OnResumeUpdate += RecordTimePoints;
     }
 
     private void Update()
     {
         _meshRenderer.material.color = _originalColor;
 
-        if (TimeController.Instance.IsRewinding)
-            RewindTimePoints();
-        else
-            RecordTimePoints();    
+        //if (TimeController.Instance.IsRewinding)
+        //    RewindTimePoints();
+        //else
+        //    RecordTimePoints();    
 
         if (_healthImg != null)
             _healthImg.fillAmount = _currentHP / _maxHP;

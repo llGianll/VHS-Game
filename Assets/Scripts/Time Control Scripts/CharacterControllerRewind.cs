@@ -20,17 +20,24 @@ public class CharacterControllerRewind : MonoBehaviour, IRewindable
     // Start is called before the first frame update
     void Start()
     {
-        TimeController.Instance.OnRewind += Rewind;
-        TimeController.Instance.OnResume += StopRewind;
+        TimeControllerEventsInit();
+    }
+
+    private void TimeControllerEventsInit()
+    {
+        TimeController.Instance.OnRewindBegin += Rewind;
+        TimeController.Instance.OnRewindEnd += StopRewind;
+        TimeController.Instance.OnRewindUpdate += RewindTimePoints;
+        TimeController.Instance.OnResumeUpdate += RecordTimePoints;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (TimeController.Instance.IsRewinding)
-            RewindTimePoints();
-        else
-            RecordTimePoints();
+        //if (TimeController.Instance.IsRewinding)
+        //    RewindTimePoints();
+        //else
+        //    RecordTimePoints();
     }
 
     public void RewindTimePoints()

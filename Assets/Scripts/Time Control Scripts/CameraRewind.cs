@@ -6,15 +6,18 @@ public class CameraRewind : MonoBehaviour, IRewindable
 {
     #region CameraTimePoint nested class
 
+    [System.Serializable]
     public class CameraTimePoint
     {
         public Quaternion CameraRotation;
         public float YRotation;
+        public float XRotation;
 
-        public CameraTimePoint(Quaternion cameraRotation, float yRotation)
+        public CameraTimePoint(Quaternion cameraRotation, float xRotation, float yRotation)
         {
             CameraRotation = cameraRotation;
             YRotation = yRotation;
+            XRotation = xRotation;
         }
     }
 
@@ -33,17 +36,21 @@ public class CameraRewind : MonoBehaviour, IRewindable
     // Start is called before the first frame update
     void Start()
     {
-        TimeController.Instance.OnRewind += Rewind;
-        TimeController.Instance.OnResume += StopRewind;
+        TimeControllerEventsInit();
+    }
+
+    private void TimeControllerEventsInit()
+    {
+        TimeController.Instance.OnRewindBegin += Rewind;
+        TimeController.Instance.OnRewindEnd += StopRewind;
+        TimeController.Instance.OnRewindUpdate += RewindTimePoints;
+        TimeController.Instance.OnResumeUpdate += RecordTimePoints;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (TimeController.Instance.IsRewinding)
-            RewindTimePoints();
-        else
-            RecordTimePoints();
+
     }
 
     public void RewindTimePoints()
@@ -73,7 +80,7 @@ public class CameraRewind : MonoBehaviour, IRewindable
 
     public void RecordTimePoints()
     {
-        CameraTimePoint timePoint = new CameraTimePoint(_cameraHolder_T.rotation, _mouseLook.yRotation);
+        CameraTimePoint timePoint = new CameraTimePoint(_cameraHolder_T.rotation, _mouseLook.xRotation , _mouseLook.yRotation);
         _cameraTimePoints.Add(timePoint);
     }
 
@@ -90,6 +97,7 @@ public class CameraRewind : MonoBehaviour, IRewindable
     private void SetCameraTimePoint(CameraTimePoint timePoint)
     {
         _cameraHolder_T.rotation = timePoint.CameraRotation;
+        _mouseLook.xRotation = timePoint.XRotation;
         _mouseLook.yRotation = timePoint.YRotation;
     }
 }

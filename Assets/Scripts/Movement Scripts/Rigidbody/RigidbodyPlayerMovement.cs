@@ -149,7 +149,7 @@ public class RigidbodyPlayerMovement : MonoBehaviour
     {
         if (isGrounded)
         {
-            Debug.Log("everybody jump");
+            //Debug.Log("everybody jump");
             //Vector3 jumpDirection = new Vector3 (mainCameraHolder.forward.x, transform.up.y, mainCameraHolder.forward.z);
             rigidBody.velocity = new Vector3(rigidBody.velocity.x, 0, rigidBody.velocity.z);
             //rigidBody.AddForce(jumpDirection * playerJumpHeight, ForceMode.Impulse);

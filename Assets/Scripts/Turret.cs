@@ -2,21 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class TurretTimePoint
-{
-    public float CurrentTime;
-    public bool HasFired;
 
-    public TurretTimePoint(float CurrentTime, bool HasFired)
-    {
-        this.CurrentTime = CurrentTime;
-        this.HasFired = HasFired;
-    }
-}
 
 public class Turret : MonoBehaviour, IRewindable
 {
+    #region TurretTimePoint inner class
+
+    [System.Serializable]
+    public class TurretTimePoint
+    {
+        public float CurrentTime;
+        public bool HasFired;
+
+        public TurretTimePoint(float CurrentTime, bool HasFired)
+        {
+            this.CurrentTime = CurrentTime;
+            this.HasFired = HasFired;
+        }
+    }
+
+    #endregion
+
     [SerializeField] float _fireRate = 0.5f;
     [SerializeField] float _projectileSpeed = 5f;
     [SerializeField] GameObject _bullet;
@@ -33,24 +39,21 @@ public class Turret : MonoBehaviour, IRewindable
 
     void Start()
     {
+        TimeControllerEventsInit();
         _currentTime = 0;
+    }
+
+    private void TimeControllerEventsInit()
+    {
+        TimeController.Instance.OnRewindBegin += Rewind;
+        TimeController.Instance.OnRewindEnd += StopRewind;
+        TimeController.Instance.OnRewindUpdate += RewindTimePoints;
+        TimeController.Instance.OnResumeUpdate += RecordTimePoints;
     }
 
     void Update()
     {
         _hasFired = _currentTime >= _fireRate ? true : false;        
-
-        if (TimeController.Instance.IsRewinding)
-            RewindTimePoints();
-        else
-        {
-            if (_hasFired)
-            {
-                SpawnBullet();
-                _currentTime = 0;
-            }
-            RecordTimePoints();
-        }
     }
 
     private void SpawnBullet()
@@ -99,6 +102,12 @@ public class Turret : MonoBehaviour, IRewindable
 
     public void RecordTimePoints()
     {
+        if (_hasFired)
+        {
+            SpawnBullet();
+            _currentTime = 0;
+        }
+
         _currentTime += Time.deltaTime;
         _turretTimePoints.Add(new TurretTimePoint(_currentTime, _hasFired));
     }

@@ -32,17 +32,24 @@ public class Bullet : MonoBehaviour, IRewindable
 
     private void Start()
     {
-        TimeController.Instance.OnRewind += Rewind;
-        TimeController.Instance.OnResume += StopRewind;
+        TimeControllerEventsInit();
     }
 
-    private void FixedUpdate()
+    private void TimeControllerEventsInit()
     {
-        if (TimeController.Instance.IsRewinding)
-            RewindTimePoints();
-        else
-            RecordTimePoints();
+        TimeController.Instance.OnRewindBegin += Rewind;
+        TimeController.Instance.OnRewindEnd += StopRewind;
+        TimeController.Instance.OnRewindUpdate += RewindTimePoints;
+        TimeController.Instance.OnResumeUpdate += RecordTimePoints;
     }
+
+    //private void FixedUpdate()
+    //{
+    //    if (TimeController.Instance.IsRewinding)
+    //        RewindTimePoints();
+    //    else
+    //        RecordTimePoints();
+    //}
 
     private void Update()
     {

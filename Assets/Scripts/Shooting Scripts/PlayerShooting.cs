@@ -3,25 +3,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShootingTimePoint
-{
-    //public currentFireTime
-    public int CurrentAmmoInMag;
-    public bool IsReloading;
-    public float ReloadTimer;
 
-    public ShootingTimePoint(int currentAmmoInMag, bool isReloading, float reloadTimer)
-    {
-        this.CurrentAmmoInMag = currentAmmoInMag;
-        this.IsReloading = isReloading;
-        this.ReloadTimer = reloadTimer;
-    }
-}
 
 public class PlayerShooting : MonoBehaviour, IRewindable
 {
-    //semi-auto pistol for now 
+    #region ShootingTimePoint inner class
+    public class ShootingTimePoint
+    {
+        //public currentFireTime
+        public int CurrentAmmoInMag;
+        public bool IsReloading;
+        public float ReloadTimer;
 
+        public ShootingTimePoint(int currentAmmoInMag, bool isReloading, float reloadTimer)
+        {
+            this.CurrentAmmoInMag = currentAmmoInMag;
+            this.IsReloading = isReloading;
+            this.ReloadTimer = reloadTimer;
+        }
+    }
+    #endregion
+
+    //semi-auto pistol for now 
     [SerializeField] Camera _shootingCamera;
     [Header("Shoot variables")]
     [SerializeField] float _damagePerBullet = 10f;
@@ -58,12 +61,19 @@ public class PlayerShooting : MonoBehaviour, IRewindable
 
     private void Start()
     {
-        TimeController.Instance.OnRewind += Rewind;
-        TimeController.Instance.OnResume += StopRewind;
+        TimeControllerEventsInit();
 
         _currentAmmoInMag = _magCapacity;
         _currentFireTime = _maxFireRate;
         _reloadTimer = 0;
+    }
+
+    private void TimeControllerEventsInit()
+    {
+        TimeController.Instance.OnRewindBegin += Rewind;
+        TimeController.Instance.OnRewindEnd += StopRewind;
+        TimeController.Instance.OnRewindUpdate += RewindTimePoints;
+        TimeController.Instance.OnResumeUpdate += RecordTimePoints;
     }
 
     private void Update()
@@ -72,19 +82,19 @@ public class PlayerShooting : MonoBehaviour, IRewindable
 
         _currentFireTime += Time.deltaTime;
 
-        if (!TimeController.Instance.IsRewinding)
-        {
-            if (Input.GetButtonDown("Fire1") && _currentFireTime >= _maxFireRate)
-                Fire();
-            else if (Input.GetKeyDown(KeyCode.R) && _currentAmmoInMag != _magCapacity && !_isReloading)
-                _reloadCoroutine = StartCoroutine(Reload(0));
+        //if (!TimeController.Instance.IsRewinding)
+        //{
+        //    if (Input.GetButtonDown("Fire1") && _currentFireTime >= _maxFireRate)
+        //        Fire();
+        //    else if (Input.GetKeyDown(KeyCode.R) && _currentAmmoInMag != _magCapacity && !_isReloading)
+        //        _reloadCoroutine = StartCoroutine(Reload(0));
 
-            RecordTimePoints();
-        }
-        else
-        {
-            RewindTimePoints();
-        }
+        //    RecordTimePoints();
+        //}
+        //else
+        //{
+        //    RewindTimePoints();
+        //}
     }
 
     private IEnumerator Reload(float startTimer)
@@ -189,6 +199,11 @@ public class PlayerShooting : MonoBehaviour, IRewindable
 
     public void RecordTimePoints()
     {
+        if (Input.GetButtonDown("Fire1") && _currentFireTime >= _maxFireRate)
+            Fire();
+        else if (Input.GetKeyDown(KeyCode.R) && _currentAmmoInMag != _magCapacity && !_isReloading)
+            _reloadCoroutine = StartCoroutine(Reload(0));
+
         _timePoints.Add(new ShootingTimePoint(_currentAmmoInMag, _isReloading, _reloadTimer));
     }
 

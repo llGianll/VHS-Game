@@ -7,11 +7,14 @@ using UnityEngine.UI;
 public class TimeController : MonoBehaviour
 {
     public static TimeController Instance;
+    private float totalTimeSubtracted;
 
     public bool IsRewinding { get; private set; }
     public float Timer { get; private set; }
-    public Action OnRewind = delegate { };
-    public Action OnResume = delegate { };
+    public Action OnRewindBegin = delegate { }; 
+    public Action OnRewindEnd = delegate { }; 
+    public Action OnRewindUpdate = delegate { };
+    public Action OnResumeUpdate = delegate { };
 
     [SerializeField] bool _manualRewind = false;
 
@@ -26,6 +29,8 @@ public class TimeController : MonoBehaviour
     [SerializeField] Sprite _playIcon;
     [SerializeField] Sprite _rewindIcon;
     [SerializeField] Text _timerText;
+
+    List<float> _timeDeltaRecord = new List<float>();
 
     private AudioSource _audioSource;
 
@@ -47,35 +52,52 @@ public class TimeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_manualRewind)
-        {
-            //for testing only 
-            ManualRewindOnKeyPress();
-        }
+        //if (_manualRewind)
+        //{
+        //    //for testing only 
+        //    ManualRewindOnKeyPress();
+        //}
 
         if (IsRewinding)
         {
-            DecreaseTimer();
-
+            int rewindFrameCount = CountRewindFrames();
+            OnRewindUpdate();
+            DecreaseTimer(rewindFrameCount);
         }
         else
+        {
+            OnResumeUpdate();
             IncreaseTimer();
+        }
 
         UpdateStatusUI();
     }
 
     private void IncreaseTimer()
     {
+        totalTimeSubtracted = 0;
         Timer += Time.deltaTime;
+        _timeDeltaRecord.Add(Time.deltaTime);
     }
 
-    private void DecreaseTimer()
+    private void DecreaseTimer(int rewindFrameCount)
     {
-        Timer -= Time.deltaTime * _rewindSpeedMult;
+        //Timer -= Time.deltaTime * _rewindSpeedMult;
+        for (int i = 0; i < rewindFrameCount; i++)
+        {
+            if (_timeDeltaRecord.Count <= 0)
+                break;
+
+            Timer -= _timeDeltaRecord[_timeDeltaRecord.Count - 1];
+            _timeDeltaRecord.RemoveAt(_timeDeltaRecord.Count - 1);
+        }
+
         Timer = Mathf.Clamp(Timer, 0, Mathf.Infinity);
 
         if (Timer <= 0)
+        {
             IsRewinding = false;
+        }
     }
 
     private void ManualRewindOnKeyPress()
@@ -84,14 +106,12 @@ public class TimeController : MonoBehaviour
         {
             IsRewinding = true;
             StartCoroutine(RewindTimer());
-            OnRewind();
-            Debug.Log("------Rewind------");
+            OnRewindBegin();
         }
         else if (Input.GetKeyUp(KeyCode.Return))
         {
             IsRewinding = false;
-            OnResume();
-            Debug.Log("------Resume------");
+            OnRewindEnd();
         }
         else
             IncreaseTimer();
@@ -106,6 +126,23 @@ public class TimeController : MonoBehaviour
         StartCoroutine(RewindTimer());
     }
 
+    public int CountRewindFrames()
+    {
+        int totalFrameCount = 0;
+
+        for (int i = 1; i <= RewindSpeedMult; i++)
+        {
+            if (totalTimeSubtracted > _rewindTime || _timeDeltaRecord.Count <= 0 || (_timeDeltaRecord.Count - i) < 0 )
+                break;
+
+            totalFrameCount++;
+            totalTimeSubtracted += _timeDeltaRecord[_timeDeltaRecord.Count - i];
+        }
+
+        return totalFrameCount;
+        //return 0;
+    }
+
     private IEnumerator RewindTimer()
     {
         Time.timeScale = 0;
@@ -114,17 +151,30 @@ public class TimeController : MonoBehaviour
 
         Time.timeScale = 1;
 
+        totalTimeSubtracted = 0;
+
         IsRewinding = true;
 
         if (_audioSource != null)
             _audioSource.Play();
 
-        OnRewind();
-        Debug.Log("------Rewind------");
-        yield return new WaitForSeconds(_rewindTime/_rewindSpeedMult); //potential time inaccuracy problem 
+        OnRewindBegin();
+
+
+        while(totalTimeSubtracted < _rewindTime)
+        {
+            //int rewindFrameCount = CountRewindFrames();
+            //OnRewindUpdate(rewindFrameCount);
+            //DecreaseTimer(rewindFrameCount);
+
+            if (Timer < 0.0001)
+                break;
+
+            yield return null;
+            //yield return new WaitForSeconds(_rewindTime/_rewindSpeedMult); //potential time inaccuracy problem 
+        }
         IsRewinding = false;
-        OnResume();
-        Debug.Log("------Resume------");
+        OnRewindEnd();
     }
 
     private void UpdateStatusUI()

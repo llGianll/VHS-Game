@@ -15,10 +15,12 @@ public class RigidbodyMouseLook : MonoBehaviour
     float mouseX;
     float mouseY;
 
-    private float xRotation = 0f;
+    //need x and y rotation to be recorded and manipulated by camera rewind script
+    [HideInInspector]
+    public float xRotation = 0f; 
 
     [HideInInspector]
-    public float yRotation = 0f; //need this data to be recorded and manipulated by camera rewind script
+    public float yRotation = 0f; 
 
     public float yAxisClampNegative = -90f;
     public float yAxisClampPositive = 90f;

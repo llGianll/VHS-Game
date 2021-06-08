@@ -19,16 +19,20 @@ public class RigidbodyControllerRewind : MonoBehaviour, IRewindable
     // Start is called before the first frame update
     void Start()
     {
-        TimeController.Instance.OnRewind += Rewind;
-        TimeController.Instance.OnResume += StopRewind;
+        TimeControllerEventsInit();
     }
 
-    private void FixedUpdate()
+    private void TimeControllerEventsInit()
     {
-        if (TimeController.Instance.IsRewinding)
-            RewindTimePoints();
-        else
-            RecordTimePoints();
+        TimeController.Instance.OnRewindBegin += Rewind;
+        TimeController.Instance.OnRewindEnd += StopRewind;
+        TimeController.Instance.OnRewindUpdate += RewindTimePoints;
+        TimeController.Instance.OnResumeUpdate += RecordTimePoints;
+    }
+
+    private void Update()
+    {
+
     }
 
     public void Rewind()
