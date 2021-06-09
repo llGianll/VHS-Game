@@ -627,7 +627,7 @@ MonoBehaviour:
   playerJumpHeight: 25
   playerGroundDrag: 12
   playerAirDrag: 2
-  playerGravity: -20
+  playerGravity: -30
 --- !u!114 &5720572075478315514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -664,8 +664,8 @@ MonoBehaviour:
   rigidbodyPlayerMovement: {fileID: 8159035430993920797}
   wallDistance: 1
   minimumJumpHeight: 1.5
-  wallRunGravity: -1
-  wallRunJumpForce: 17
+  wallRunGravity: 0
+  wallRunJumpForce: 15
   wallRunTimer: 2
 --- !u!114 &1878094530
 MonoBehaviour:
