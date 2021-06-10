@@ -45,6 +45,7 @@ public class CameraRewind : MonoBehaviour, IRewindable
         TimeController.Instance.OnRewindEnd += StopRewind;
         TimeController.Instance.OnRewindUpdate += RewindTimePoints;
         TimeController.Instance.OnResumeUpdate += RecordTimePoints;
+        TimeController.Instance.OnReachedFrameThreshold += RemoveFrame;
     }
 
     // Update is called once per frame
@@ -99,5 +100,10 @@ public class CameraRewind : MonoBehaviour, IRewindable
         _cameraHolder_T.rotation = timePoint.CameraRotation;
         _mouseLook.xRotation = timePoint.XRotation;
         _mouseLook.yRotation = timePoint.YRotation;
+    }
+
+    public void RemoveFrame()
+    {
+        _cameraTimePoints.RemoveAt(0);
     }
 }

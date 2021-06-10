@@ -74,6 +74,7 @@ public class PlayerShooting : MonoBehaviour, IRewindable
         TimeController.Instance.OnRewindEnd += StopRewind;
         TimeController.Instance.OnRewindUpdate += RewindTimePoints;
         TimeController.Instance.OnResumeUpdate += RecordTimePoints;
+        TimeController.Instance.OnReachedFrameThreshold += RemoveFrame;
     }
 
     private void Update()
@@ -212,5 +213,10 @@ public class PlayerShooting : MonoBehaviour, IRewindable
         _currentAmmoInMag = timePoint.CurrentAmmoInMag;
         _isReloading = timePoint.IsReloading;
         _reloadTimer = timePoint.ReloadTimer;
+    }
+
+    public void RemoveFrame()
+    {
+        _timePoints.RemoveAt(0);
     }
 }

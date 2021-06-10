@@ -41,6 +41,7 @@ public class Bullet : MonoBehaviour, IRewindable
         TimeController.Instance.OnRewindEnd += StopRewind;
         TimeController.Instance.OnRewindUpdate += RewindTimePoints;
         TimeController.Instance.OnResumeUpdate += RecordTimePoints;
+        TimeController.Instance.OnReachedFrameThreshold += RemoveFrame;
     }
 
     //private void FixedUpdate()
@@ -136,5 +137,14 @@ public class Bullet : MonoBehaviour, IRewindable
         transform.localScale = timePoint.Scale;
         rb.velocity = timePoint.Velocity;
         _isActive = timePoint.IsActive;
+    }
+
+    public void RemoveFrame()
+    {
+        if(TimeController.Instance.Timer - _timeSpawned > TimeController.Instance.RewindFrameThreshold)
+        {
+            gameObject.SetActive(false);
+            //_timePoints.RemoveAt(0); 
+        }
     }
 }

@@ -49,6 +49,7 @@ public class Turret : MonoBehaviour, IRewindable
         TimeController.Instance.OnRewindEnd += StopRewind;
         TimeController.Instance.OnRewindUpdate += RewindTimePoints;
         TimeController.Instance.OnResumeUpdate += RecordTimePoints;
+        TimeController.Instance.OnReachedFrameThreshold += RemoveFrame;
     }
 
     void Update()
@@ -110,5 +111,10 @@ public class Turret : MonoBehaviour, IRewindable
 
         _currentTime += Time.deltaTime;
         _turretTimePoints.Add(new TurretTimePoint(_currentTime, _hasFired));
+    }
+
+    public void RemoveFrame()
+    {
+        _turretTimePoints.RemoveAt(0);
     }
 }

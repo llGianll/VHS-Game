@@ -7,7 +7,9 @@ using UnityEngine.UI;
 public class TimeController : MonoBehaviour
 {
     public static TimeController Instance;
+
     private float totalTimeSubtracted;
+    private float _accumulatedTimeDelta; //optimization variable 
 
     public bool IsRewinding { get; private set; }
     public float Timer { get; private set; }
@@ -15,8 +17,14 @@ public class TimeController : MonoBehaviour
     public Action OnRewindEnd = delegate { }; 
     public Action OnRewindUpdate = delegate { };
     public Action OnResumeUpdate = delegate { };
+    public Action OnReachedFrameThreshold = delegate { };
 
+    [Header("Dev variables")]
     [SerializeField] bool _manualRewind = false;
+    //[Optimization] only store last n seconds worth of frames, remove the rest
+    [SerializeField] float _rewindFrameThreshold = 30f; //how long until a certain frame is unreachable through rewind 
+
+    public float RewindFrameThreshold => _rewindFrameThreshold;
 
     [Header("Time variables")]
     [SerializeField] float _rewindTime = 5f;
@@ -47,6 +55,13 @@ public class TimeController : MonoBehaviour
     private void Start()
     {
         Timer = 0;
+        OnReachedFrameThreshold += RemoveFrame;
+    }
+
+    private void RemoveFrame()
+    {
+        _accumulatedTimeDelta -= _timeDeltaRecord[0];
+        _timeDeltaRecord.RemoveAt(0);
     }
 
     // Update is called once per frame
@@ -68,6 +83,8 @@ public class TimeController : MonoBehaviour
         {
             OnResumeUpdate();
             IncreaseTimer();
+            if (_accumulatedTimeDelta > _rewindFrameThreshold)
+                OnReachedFrameThreshold();
         }
 
         UpdateStatusUI();
@@ -77,6 +94,7 @@ public class TimeController : MonoBehaviour
     {
         totalTimeSubtracted = 0;
         Timer += Time.deltaTime;
+        _accumulatedTimeDelta += Time.deltaTime;
         _timeDeltaRecord.Add(Time.deltaTime);
     }
 
@@ -89,6 +107,7 @@ public class TimeController : MonoBehaviour
                 break;
 
             Timer -= _timeDeltaRecord[_timeDeltaRecord.Count - 1];
+            _accumulatedTimeDelta -= _timeDeltaRecord[_timeDeltaRecord.Count - 1];
             _timeDeltaRecord.RemoveAt(_timeDeltaRecord.Count - 1);
         }
 
@@ -177,6 +196,7 @@ public class TimeController : MonoBehaviour
         OnRewindEnd();
     }
 
+    //[TODO]should be transferred to it's own UI class 
     private void UpdateStatusUI()
     {
         if (IsRewinding)

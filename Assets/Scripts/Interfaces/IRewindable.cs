@@ -4,4 +4,5 @@
     void StopRewind();
     void RewindTimePoints();
     void RecordTimePoints();
+    void RemoveFrame();
 }

@@ -29,6 +29,7 @@ public class CharacterControllerRewind : MonoBehaviour, IRewindable
         TimeController.Instance.OnRewindEnd += StopRewind;
         TimeController.Instance.OnRewindUpdate += RewindTimePoints;
         TimeController.Instance.OnResumeUpdate += RecordTimePoints;
+        TimeController.Instance.OnReachedFrameThreshold += RemoveFrame;
     }
 
     // Update is called once per frame
@@ -88,5 +89,10 @@ public class CharacterControllerRewind : MonoBehaviour, IRewindable
         transform.rotation = timePoint.Rotation;
         transform.localScale = timePoint.Scale;
         _playerMovement.NetVelocity = timePoint.Velocity;
+    }
+
+    public void RemoveFrame()
+    {
+        _timePoints.RemoveAt(0);
     }
 }

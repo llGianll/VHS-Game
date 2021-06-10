@@ -34,6 +34,7 @@ public class Target : MonoBehaviour, IShootable, IRewindable
         TimeController.Instance.OnRewindEnd += StopRewind;
         TimeController.Instance.OnRewindUpdate += RewindTimePoints;
         TimeController.Instance.OnResumeUpdate += RecordTimePoints;
+        TimeController.Instance.OnReachedFrameThreshold += RemoveFrame;
     }
 
     private void Update()
@@ -93,5 +94,10 @@ public class Target : MonoBehaviour, IShootable, IRewindable
     public void RecordTimePoints()
     {
         _timePoints.Add(_currentHP);
+    }
+
+    public void RemoveFrame()
+    {
+        _timePoints.RemoveAt(0);
     }
 }

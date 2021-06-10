@@ -28,6 +28,7 @@ public class RigidbodyControllerRewind : MonoBehaviour, IRewindable
         TimeController.Instance.OnRewindEnd += StopRewind;
         TimeController.Instance.OnRewindUpdate += RewindTimePoints;
         TimeController.Instance.OnResumeUpdate += RecordTimePoints;
+        TimeController.Instance.OnReachedFrameThreshold += RemoveFrame;
     }
 
     private void Update()
@@ -83,5 +84,10 @@ public class RigidbodyControllerRewind : MonoBehaviour, IRewindable
         _orientationT.rotation = timePoint.Rotation;
         transform.localScale = timePoint.Scale;
         rb.velocity = timePoint.Velocity;
+    }
+
+    public void RemoveFrame()
+    {
+        _timePoints.RemoveAt(0);
     }
 }
