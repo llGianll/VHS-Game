@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1897389278
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1897389279}
+  m_Layer: 0
+  m_Name: AboveHeadCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1897389279
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1897389278}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.84, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5720572075478315517}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5720572073811772839
 GameObject:
   m_ObjectHideFlags: 0
@@ -465,6 +495,7 @@ Transform:
   - {fileID: 8159035430570654783}
   - {fileID: 8159035430948567716}
   - {fileID: 7893225733585656811}
+  - {fileID: 1897389279}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -499,21 +530,36 @@ MonoBehaviour:
   rigidBody: {fileID: 8159035430993920796}
   orientation: {fileID: 8159035430570654783}
   groundCheck: {fileID: 7893225733585656811}
+  aboveHeadCheck: {fileID: 1897389279}
   groundMask:
     serializedVersion: 2
     m_Bits: 512
+  moveCamera: {fileID: 0}
   groundDistance: 0.15
   isGrounded: 0
   playerSpeed: 6
   playerWalkSpeed: 6
   playerRunSpeed: 12
+  playerCrouchSpeed: 3
   playerAcceleration: 10
   playerSpeedMultiplier: 10
-  playerAirMultiplier: 0.4
-  playerJumpHeight: 20
   playerGroundDrag: 12
+  canSprint: 1
+  playerJumpHeight: 20
+  playerAirMultiplier: 0.4
   playerAirDrag: 2
   playerGravity: -20
+  canJump: 1
+  slideForce: 40
+  slideDrag: 0.5
+  crouchSize: {x: 0.5, y: 0.5, z: 0.5}
+  standSize: {x: 1, y: 1, z: 1}
+  crouchScale: {x: 0.5, y: 0.5, z: 0.5}
+  crouchButtonPressed: 0
+  isCrouching: 0
+  isSliding: 0
+  aboveHeadDistance: 0.75
+  detectedItemAboveHeadDuringCrouch: 0
 --- !u!136 &8159035430993920798
 CapsuleCollider:
   m_ObjectHideFlags: 0

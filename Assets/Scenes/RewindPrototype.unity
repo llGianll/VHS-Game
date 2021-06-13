@@ -516,6 +516,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: RigidbodyCameraHolder
       objectReference: {fileID: 0}
+    - target: {fileID: 9034946341334570710, guid: b628c5960d1481242a86af2e1a32551a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9034946341334570711, guid: b628c5960d1481242a86af2e1a32551a,
+        type: 3}
+      propertyPath: fov
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 9034946341334570711, guid: b628c5960d1481242a86af2e1a32551a,
+        type: 3}
+      propertyPath: toSetFov
+      value: 90
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b628c5960d1481242a86af2e1a32551a, type: 3}
 --- !u!1 &594449829
@@ -860,7 +875,7 @@ GameObject:
   - component: {fileID: 1110332430}
   - component: {fileID: 1110332429}
   - component: {fileID: 1110332428}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Wall (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1749,6 +1764,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RigidbodyAmongUsPlaceholder
+      objectReference: {fileID: 0}
+    - target: {fileID: 5720572075478315515, guid: 579777810b81e4b468ffeb32013e04e9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5720572075478315517, guid: 579777810b81e4b468ffeb32013e04e9,
         type: 3}

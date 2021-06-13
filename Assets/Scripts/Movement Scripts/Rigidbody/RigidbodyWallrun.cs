@@ -93,21 +93,24 @@ public class RigidbodyWallrun : MonoBehaviour
         {
             if (wallLeft)
             {
-                Vector3 wallRunJumpDirection = mainCameraHolder.forward; //+ leftWallHit.normal; //check if normalized vector3 or not works better
+                //Vector3 wallRunJumpDirection = mainCameraHolder.forward; + leftWallHit.normal; //check if normalized vector3 or not works better
+                Vector3 wallRunJumpDirection = transform.up + leftWallHit.normal;
                 rigidBody.velocity = new Vector3(rigidBody.velocity.x, 0, rigidBody.velocity.z);
                 rigidBody.AddForce(wallRunJumpDirection * wallRunJumpForce * 100, ForceMode.Force);
                 Debug.Log("wall jumped from left");
             }
             else if (wallRight)
             {
-                Vector3 wallRunJumpDirection = mainCameraHolder.forward; //+ rightWallHit.normal; //check if normalized vector3 or not works better
+                //Vector3 wallRunJumpDirection = mainCameraHolder.forward; + rightWallHit.normal; //check if normalized vector3 or not works better
+                Vector3 wallRunJumpDirection = transform.up + rightWallHit.normal;
                 rigidBody.velocity = new Vector3(rigidBody.velocity.x, 0, rigidBody.velocity.z);
                 rigidBody.AddForce(wallRunJumpDirection * wallRunJumpForce * 100, ForceMode.Force);
                 Debug.Log("wall jumped from right");
             }
             else if (wallBack)
             {
-                Vector3 wallRunJumpDirection = mainCameraHolder.forward; //+ backWallHit.normal; //check if normalized vector3 or not works better
+                //Vector3 wallRunJumpDirection = mainCameraHolder.forward; + backWallHit.normal; //check if normalized vector3 or not works better
+                Vector3 wallRunJumpDirection = transform.up + backWallHit.normal;
                 rigidBody.velocity = new Vector3(rigidBody.velocity.x, 0, rigidBody.velocity.z);
                 rigidBody.AddForce(wallRunJumpDirection * wallRunJumpForce * 100, ForceMode.Force);
                 Debug.Log("wall jumped from back");
