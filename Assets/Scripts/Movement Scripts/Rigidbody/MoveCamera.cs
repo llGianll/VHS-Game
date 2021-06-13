@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MoveCamera : MonoBehaviour
 {
+
     [SerializeField] Transform cameraPosition;
 
     private void Start()
@@ -17,4 +18,8 @@ public class MoveCamera : MonoBehaviour
         transform.position = cameraPosition.position;
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> features/basic-player-movement
 }
