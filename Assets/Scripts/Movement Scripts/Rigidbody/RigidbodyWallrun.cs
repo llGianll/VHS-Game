@@ -94,7 +94,7 @@ public class RigidbodyWallrun : MonoBehaviour
                 //Vector3 wallRunJumpDirection = mainCameraHolder.forward; + leftWallHit.normal; //check if normalized vector3 or not works better
                 Vector3 wallRunJumpDirection = transform.up + leftWallHit.normal;
                 rigidBody.velocity = new Vector3(rigidBody.velocity.x, 0, rigidBody.velocity.z);
-                rigidBody.AddForce(wallRunJumpDirection + Vector3.up * wallRunJumpForce * 100, ForceMode.Force);
+                rigidBody.AddForce(wallRunJumpDirection* wallRunJumpForce * 100, ForceMode.Force);
                 Debug.Log("wall jumped from left");
             }
             else if (wallRight)
@@ -102,7 +102,7 @@ public class RigidbodyWallrun : MonoBehaviour
                 //Vector3 wallRunJumpDirection = mainCameraHolder.forward; + rightWallHit.normal; //check if normalized vector3 or not works better
                 Vector3 wallRunJumpDirection = transform.up + rightWallHit.normal;
                 rigidBody.velocity = new Vector3(rigidBody.velocity.x, 0, rigidBody.velocity.z);
-                rigidBody.AddForce(wallRunJumpDirection + Vector3.up * wallRunJumpForce * 100, ForceMode.Force);
+                rigidBody.AddForce(wallRunJumpDirection * wallRunJumpForce * 100, ForceMode.Force);
                 Debug.Log("wall jumped from right");
             }
             else if (wallBack)

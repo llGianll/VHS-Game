@@ -17,9 +17,4 @@ public class MoveCamera : MonoBehaviour
     {
         transform.position = cameraPosition.position;
     }
-
-<<<<<<< HEAD
-=======
-
->>>>>>> features/basic-player-movement
 }

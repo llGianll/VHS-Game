@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1666633961}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.28, z: 0}
+  m_LocalPosition: {x: 0, y: 1.45, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4785156521545373641}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 8362660778351295970}
   - component: {fileID: 3120028142676894851}
   - component: {fileID: 1378897810873442761}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CoolPompadour
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -196,7 +196,7 @@ GameObject:
   - component: {fileID: 4785156520633740606}
   - component: {fileID: 4785156520633740607}
   - component: {fileID: 4785156520633740604}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -350,8 +350,8 @@ MonoBehaviour:
   playerGroundDrag: 12
   canSprint: 1
   playerJumpHeight: 20
-  playerAirMultiplier: 0.4
-  playerAirDrag: 2
+  playerAirMultiplier: 0.15
+  playerAirDrag: 1.5
   playerGravity: -20
   canJump: 1
   slideForce: 40
@@ -362,7 +362,8 @@ MonoBehaviour:
   crouchButtonPressed: 0
   isCrouching: 0
   isSliding: 0
-  aboveHeadDistance: 0.75
+  crouchFallDistance: 1.5
+  aboveHeadDistance: 0.45
   detectedItemAboveHeadDuringCrouch: 0
 --- !u!136 &5318191875183188121
 CapsuleCollider:
@@ -394,6 +395,8 @@ MonoBehaviour:
   orientation: {fileID: 4785156521815282430}
   mouseSensitivityX: 20
   mouseSensitivityY: 20
+  xRotation: 0
+  yRotation: 0
   yAxisClampNegative: -90
   yAxisClampPositive: 90
 --- !u!114 &8981046632813123452
@@ -413,7 +416,7 @@ MonoBehaviour:
   wallDistance: 0.75
   minimumJumpHeight: 1.5
   wallRunGravity: -9.8
-  wallRunJumpForce: 10
+  wallRunJumpForce: 8
   wallRunTimer: 2
 --- !u!1 &4785156521815282431
 GameObject:

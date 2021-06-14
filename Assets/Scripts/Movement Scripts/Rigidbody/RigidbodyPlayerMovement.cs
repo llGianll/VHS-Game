@@ -61,6 +61,7 @@ public class RigidbodyPlayerMovement : MonoBehaviour
     public bool isCrouching = false;
     public bool isSliding = false;
     bool crouchCooldown = true;
+    public float crouchFallDistance;
     public float aboveHeadDistance;
     public bool detectedItemAboveHeadDuringCrouch;
 
@@ -191,6 +192,8 @@ public class RigidbodyPlayerMovement : MonoBehaviour
         {
             transform.localScale = normalScale;
             isCrouching = false;
+            canJump = true;
+            canSprint = true;
         }
         
 
@@ -303,7 +306,7 @@ public class RigidbodyPlayerMovement : MonoBehaviour
                 canSprint = false;
                 canJump = false;
                 ToSetSize = crouchSize;
-                transform.position = new Vector3(transform.position.x, transform.position.y - playerHeight/2, transform.position.z);
+                transform.position = new Vector3(transform.position.x, transform.position.y - crouchFallDistance/2, transform.position.z);
                 transform.localScale = crouchScale;
                 isCrouching = true;
                 Debug.Log("crouched");
@@ -391,7 +394,6 @@ public class RigidbodyPlayerMovement : MonoBehaviour
             transform.localScale = Vector3.Lerp(transform.localScale, ToSetSize, 8 * Time.deltaTime);
         }
 
-        //Changing our size (from crouching) smoothly
     }
 
 
