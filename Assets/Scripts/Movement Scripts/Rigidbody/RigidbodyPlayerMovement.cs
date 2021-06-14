@@ -124,7 +124,7 @@ public class RigidbodyPlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rigidBody.AddForce(Vector3.down * -playerGravity, ForceMode.Force);
+        
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
@@ -201,6 +201,7 @@ public class RigidbodyPlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        rigidBody.AddForce(Vector3.down * -playerGravity, ForceMode.Force);
         PlayerMove();
     }
 
