@@ -21,6 +21,7 @@ public class TurretRadialType : TurretBase
 
     private void Start()
     {
+        InitializeStart();
     }
 
     private void Update()

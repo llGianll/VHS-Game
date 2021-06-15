@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour, IRewindable
+public class Bullet : MonoBehaviour, IRewindable, IShootable
 {
     List<TimePoint> _timePoints = new List<TimePoint>();
 
@@ -146,5 +146,10 @@ public class Bullet : MonoBehaviour, IRewindable
             gameObject.SetActive(false);
             //_timePoints.RemoveAt(0); 
         }
+    }
+
+    public void Hit(float damage)
+    {
+        _isActive = false;
     }
 }

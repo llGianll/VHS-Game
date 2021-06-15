@@ -57,6 +57,20 @@ public class CubeBase : MonoBehaviour, IRewindable
         _currentTime = 0;
     }
 
+    public void InitializeStart()
+    {
+        TimeControllerEventsInit();
+    }
+
+    private void TimeControllerEventsInit()
+    {
+        TimeController.Instance.OnRewindBegin += Rewind;
+        TimeController.Instance.OnRewindEnd += StopRewind;
+        TimeController.Instance.OnRewindUpdate += RewindTimePoints;
+        TimeController.Instance.OnResumeUpdate += RecordTimePoints;
+        TimeController.Instance.OnReachedFrameThreshold += RemoveFrame;
+    }
+
     public void RotateCube()
     {
         if (_isRotating)
@@ -67,10 +81,10 @@ public class CubeBase : MonoBehaviour, IRewindable
 
     public void RewindUpdate()
     {
-        if (TimeController.Instance.IsRewinding)
-            RewindTimePoints();
-        else
-            RecordTimePoints();
+        //if (TimeController.Instance.IsRewinding)
+        //    RewindTimePoints();
+        //else
+        //    RecordTimePoints();
     }
 
     public void Rewind()
@@ -115,5 +129,10 @@ public class CubeBase : MonoBehaviour, IRewindable
     {
         _currentTime += Time.deltaTime;
         _cubeTimePoints.Add(new CubeTimePoint(_currentTime, _hasFired, gameObject.transform));
+    }
+
+    public void RemoveFrame()
+    {
+        _cubeTimePoints.RemoveAt(0);
     }
 }

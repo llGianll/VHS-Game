@@ -118,6 +118,8 @@ public class TimeController : MonoBehaviour
         if (IsRewinding)
             return;
 
+        Debug.Log("Rewinding");
+
         StartCoroutine(RewindTimer());
     }
 
@@ -140,11 +142,11 @@ public class TimeController : MonoBehaviour
 
     private IEnumerator RewindTimer()
     {
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
 
-        yield return new WaitForSecondsRealtime(0.5f);
+        //yield return new WaitForSecondsRealtime(0.5f);
 
-        Time.timeScale = 1;
+        //Time.timeScale = 1;
 
         totalTimeSubtracted = 0;
 

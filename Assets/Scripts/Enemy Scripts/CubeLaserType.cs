@@ -12,6 +12,11 @@ public class CubeLaserType : CubeBase
         _lasers = new List<Laser>(transform.GetComponentsInChildren<Laser>(false));
     }
 
+    private void Start()
+    {
+        InitializeStart();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -24,12 +29,12 @@ public class CubeLaserType : CubeBase
 
     void ShootLaser()
     {
-        if (!TimeController.Instance.IsRewinding)
-        {
+        //if (!TimeController.Instance.IsRewinding)
+        //{
             foreach (Laser laser in _lasers)
             {
                 laser.laserVector = (laser.transform.position - this.transform.position).normalized;
             }
-        }
+        //}
     }
 }

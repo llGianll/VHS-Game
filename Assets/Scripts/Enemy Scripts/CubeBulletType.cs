@@ -13,6 +13,11 @@ public class CubeBulletType : CubeBase
         Initialize();
     }
 
+    private void Start()
+    {
+        InitializeStart();
+    }
+
     // Update is called once per frame
     void Update()
     {

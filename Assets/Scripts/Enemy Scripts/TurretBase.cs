@@ -34,21 +34,24 @@ public class TurretBase : MonoBehaviour, IRewindable
         _currentTime = 0;
     }
 
+    public void InitializeStart()
+    {
+        //Time controller event registrations can't be on Awake()
+        TimeControllerEventsInit();
+    }
+
+    private void TimeControllerEventsInit()
+    {
+        TimeController.Instance.OnRewindBegin += Rewind;
+        TimeController.Instance.OnRewindEnd += StopRewind;
+        TimeController.Instance.OnRewindUpdate += RewindTimePoints;
+        TimeController.Instance.OnResumeUpdate += RecordTimePoints;
+        TimeController.Instance.OnReachedFrameThreshold += RemoveFrame;
+    }
+
     public void OnUpdate()
     {
         _hasFired = _currentTime >= _fireRate ? true : false;
-
-        if (TimeController.Instance.IsRewinding)
-            RewindTimePoints();
-        else
-        {
-            if (_hasFired)
-            {
-                SpawnBullet();
-                _currentTime = 0;
-            }
-            RecordTimePoints();
-        }
     }
 
     private void SpawnBullet()
@@ -99,7 +102,23 @@ public class TurretBase : MonoBehaviour, IRewindable
 
     public void RecordTimePoints()
     {
+        FireBullet();
+
         _currentTime += Time.deltaTime;
         _turretTimePoints.Add(new TurretTimePoint(_currentTime, _hasFired, gameObject.transform));
+    }
+
+    private void FireBullet()
+    {
+        if (_hasFired)
+        {
+            SpawnBullet();
+            _currentTime = 0;
+        }
+    }
+
+    public void RemoveFrame()
+    {
+        _turretTimePoints.RemoveAt(0);
     }
 }

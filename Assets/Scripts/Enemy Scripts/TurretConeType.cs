@@ -26,6 +26,7 @@ public class TurretConeType : TurretBase
 
     private void Start()
     {
+        InitializeStart();
     }
 
     private void Update()

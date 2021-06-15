@@ -7,6 +7,6 @@ public class LevelManager : Singleton<LevelManager>
 {
     public void RestartLevel()
     {
-        SceneManager.LoadScene("Lvl1");
+        SceneManager.LoadScene("Level_1");
     }
 }
