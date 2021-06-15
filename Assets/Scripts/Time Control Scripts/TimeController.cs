@@ -67,12 +67,6 @@ public class TimeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (_manualRewind)
-        //{
-        //    //for testing only 
-        //    ManualRewindOnKeyPress();
-        //}
-
         if (IsRewinding)
         {
             int rewindFrameCount = CountRewindFrames();
@@ -119,27 +113,9 @@ public class TimeController : MonoBehaviour
         }
     }
 
-    private void ManualRewindOnKeyPress()
-    {
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            IsRewinding = true;
-            StartCoroutine(RewindTimer());
-            OnRewindBegin();
-        }
-        else if (Input.GetKeyUp(KeyCode.Return))
-        {
-            IsRewinding = false;
-            OnRewindEnd();
-        }
-        else
-            IncreaseTimer();
-
-    }
-
     public void Rewind()
     {
-        if (_manualRewind)
+        if (IsRewinding)
             return;
 
         StartCoroutine(RewindTimer());
@@ -190,10 +166,10 @@ public class TimeController : MonoBehaviour
                 break;
 
             yield return null;
-            //yield return new WaitForSeconds(_rewindTime/_rewindSpeedMult); //potential time inaccuracy problem 
         }
         IsRewinding = false;
         OnRewindEnd();
+        GameManager.Instance.DecreaseRewind();
     }
 
     //[TODO]should be transferred to it's own UI class 

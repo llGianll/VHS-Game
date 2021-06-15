@@ -190,6 +190,7 @@ public class RigidbodyPlayerMovement : MonoBehaviour
 
         if(!Input.GetKey(KeyCode.C) && isCrouching && !detectedItemAboveHeadDuringCrouch)
         {
+            //to automatically leave crouch as soon as there's nothing above without pressing c again 
             transform.localScale = normalScale;
             isCrouching = false;
             canJump = true;
@@ -394,7 +395,6 @@ public class RigidbodyPlayerMovement : MonoBehaviour
         {
             transform.localScale = Vector3.Lerp(transform.localScale, ToSetSize, 8 * Time.deltaTime);
         }
-
     }
 
 

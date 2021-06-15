@@ -1,17 +1,36 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class RigidbodyControllerRewind : MonoBehaviour, IRewindable
 {
+    #region
+    public class CrouchValues
+    {
+        //add more fields if necessary
+        public bool IsCrouching; 
+
+        public CrouchValues(bool isCrouching)
+        {
+            IsCrouching = isCrouching;
+        }
+    }
+
+
+    #endregion
+
     Transform _orientationT;
     List<TimePoint> _timePoints = new List<TimePoint>();
+    List<CrouchValues> _crouchValues = new List<CrouchValues>();
 
+    RigidbodyPlayerMovement _rbPlayerMovement;
     Rigidbody rb;
 
     private void Awake()
     {
+        _rbPlayerMovement = GetComponent<RigidbodyPlayerMovement>();
         _orientationT = transform.GetChild(0);
         rb = GetComponent<Rigidbody>();
     }
@@ -55,15 +74,19 @@ public class RigidbodyControllerRewind : MonoBehaviour, IRewindable
             if (_timePoints.Count < timeIndex)
             {
                 SetTimePoint(_timePoints[0]);
+                SetCrouchPoint(_crouchValues[0]);
                 _timePoints.Clear();
             }
             else
             {
                 SetTimePoint(_timePoints[_timePoints.Count - timeIndex]);
+                SetCrouchPoint(_crouchValues[_crouchValues.Count - timeIndex]);
                 for (int i = 0; i < timeIndex; i++)
                 {
                     _timePoints.RemoveAt(_timePoints.Count - 1);
+                    _crouchValues.RemoveAt(_crouchValues.Count - 1);
                 }
+                
             }
 
         }
@@ -72,10 +95,14 @@ public class RigidbodyControllerRewind : MonoBehaviour, IRewindable
 
     }
 
+
     public void RecordTimePoints()
     {
         TimePoint timePoint = new TimePoint(transform.position, _orientationT.rotation, transform.localScale, rb.velocity);
         _timePoints.Add(timePoint);
+
+        CrouchValues crouchPoint = new CrouchValues(_rbPlayerMovement.isCrouching);
+        _crouchValues.Add(crouchPoint);
     }
 
     private void SetTimePoint(TimePoint timePoint)
@@ -84,6 +111,11 @@ public class RigidbodyControllerRewind : MonoBehaviour, IRewindable
         _orientationT.rotation = timePoint.Rotation;
         transform.localScale = timePoint.Scale;
         rb.velocity = timePoint.Velocity;
+    }
+
+    private void SetCrouchPoint(CrouchValues crouchPoint)
+    {
+        _rbPlayerMovement.isCrouching = crouchPoint.IsCrouching;
     }
 
     public void RemoveFrame()
