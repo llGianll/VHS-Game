@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _manualRewind: 0
+  _rewindFrameThreshold: 30
   _rewindTime: 5
   _rewindSpeedMult: 5
   _statusImg: {fileID: 0}
@@ -61,7 +62,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 611a5300daaf1de49895e8b811dc0ece, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 364bb768579372149bd62fb0f70bd634, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
