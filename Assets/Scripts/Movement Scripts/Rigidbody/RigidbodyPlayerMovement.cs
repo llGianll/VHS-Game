@@ -45,6 +45,7 @@ public class RigidbodyPlayerMovement : MonoBehaviour
     public float playerAirMultiplier = 0.4f;
     public float playerAirDrag = 1f;
     public float playerGravity = -20f;
+    public float playerJumpVelocityLimiter = 2f;
     public bool canJump = true;
 
     [Header("Crouching and Sliding")]
@@ -272,9 +273,9 @@ public class RigidbodyPlayerMovement : MonoBehaviour
         {
             //Debug.Log("everybody jump");
             //Vector3 jumpDirection = new Vector3 (mainCameraHolder.forward.x, transform.up.y, mainCameraHolder.forward.z);
-            rigidBody.velocity = new Vector3(rigidBody.velocity.x, 0, rigidBody.velocity.z);
+            rigidBody.velocity = new Vector3(rigidBody.velocity.x / playerJumpVelocityLimiter, 0, rigidBody.velocity.z / playerJumpVelocityLimiter);
             //rigidBody.AddForce(jumpDirection * playerJumpHeight, ForceMode.Impulse);
-            rigidBody.AddForce(transform.up * playerJumpHeight, ForceMode.Impulse);
+            rigidBody.AddForce(transform.up.normalized * playerJumpHeight, ForceMode.Impulse);
         }
     }
 
