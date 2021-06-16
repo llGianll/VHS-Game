@@ -477,7 +477,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   moveCamera: {fileID: 0}
-  groundDistance: 0.15
+  groundDistance: 0.25
   isGrounded: 0
   playerSpeed: 6
   playerWalkSpeed: 6
@@ -487,10 +487,11 @@ MonoBehaviour:
   playerSpeedMultiplier: 10
   playerGroundDrag: 12
   canSprint: 1
-  playerJumpHeight: 20
-  playerAirMultiplier: 0.15
-  playerAirDrag: 1.5
+  playerJumpHeight: 14.8
+  playerAirMultiplier: 0.125
+  playerAirDrag: 0.75
   playerGravity: -20
+  playerJumpVelocityLimiter: 5
   canJump: 1
   slideForce: 40
   slideDrag: 0.5
@@ -551,10 +552,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orientation: {fileID: 7451268488682465395}
   rigidbodyPlayerMovement: {fileID: 7451268489106397009}
-  wallDistance: 0.75
+  wallDistance: 0.85
   minimumJumpHeight: 1.5
+  forwardWallJumpVectorDistance: 0.5
   wallRunGravity: -9.8
-  wallRunJumpForce: 8
+  wallRunJumpForce: 6
   wallRunTimer: 2
 --- !u!114 &326369225
 MonoBehaviour:
