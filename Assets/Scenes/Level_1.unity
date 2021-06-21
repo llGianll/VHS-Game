@@ -54644,18 +54644,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1334093219}
   m_Mesh: {fileID: 2277760596653487561, guid: bda45005aac22fe46825512795b38d1b, type: 3}
---- !u!114 &1345818733 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6426922226739635636, guid: 0d0f89c0f694c2345a22392801d881ea,
-    type: 3}
-  m_PrefabInstance: {fileID: 1623772649}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cdb86117edae9540a7a5931dcd0e48c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1350047667
 GameObject:
   m_ObjectHideFlags: 0
@@ -66363,16 +66351,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6426922226739635633, guid: 0d0f89c0f694c2345a22392801d881ea,
         type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6426922226739635633, guid: 0d0f89c0f694c2345a22392801d881ea,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6426922226739635633, guid: 0d0f89c0f694c2345a22392801d881ea,
-        type: 3}
       propertyPath: m_LocalPosition.x
       value: 147.99
       objectReference: {fileID: 0}
@@ -66421,120 +66399,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6426922226739635636, guid: 0d0f89c0f694c2345a22392801d881ea,
-        type: 3}
-      propertyPath: wallRunFov
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 6426922226739635636, guid: 0d0f89c0f694c2345a22392801d881ea,
-        type: 3}
-      propertyPath: wallDistance
-      value: 0.95
-      objectReference: {fileID: 0}
-    - target: {fileID: 6426922226739635636, guid: 0d0f89c0f694c2345a22392801d881ea,
-        type: 3}
-      propertyPath: wallMask.m_Bits
-      value: 2048
-      objectReference: {fileID: 0}
-    - target: {fileID: 6426922226739635636, guid: 0d0f89c0f694c2345a22392801d881ea,
-        type: 3}
-      propertyPath: wallRunJumpForce
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 6426922226739635636, guid: 0d0f89c0f694c2345a22392801d881ea,
-        type: 3}
-      propertyPath: wallRunCameraTilt
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 6426922226739635636, guid: 0d0f89c0f694c2345a22392801d881ea,
-        type: 3}
-      propertyPath: playerWallRunSpeed
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 6426922226739635636, guid: 0d0f89c0f694c2345a22392801d881ea,
-        type: 3}
-      propertyPath: wallRunCameraRotation
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 6426922226739635636, guid: 0d0f89c0f694c2345a22392801d881ea,
-        type: 3}
-      propertyPath: wallRunCameraTiltTime
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6426922226739635636, guid: 0d0f89c0f694c2345a22392801d881ea,
-        type: 3}
-      propertyPath: verticalWallRunJumpForce
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6426922226739635636, guid: 0d0f89c0f694c2345a22392801d881ea,
-        type: 3}
-      propertyPath: wallRunCameraRotationTime
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6426922226739635636, guid: 0d0f89c0f694c2345a22392801d881ea,
-        type: 3}
-      propertyPath: horizontalWallRunJumpForce
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 6426922226739635636, guid: 0d0f89c0f694c2345a22392801d881ea,
-        type: 3}
-      propertyPath: fovToWallRunFovTransitionTime
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6426922226739635638, guid: 0d0f89c0f694c2345a22392801d881ea,
-        type: 3}
-      propertyPath: wallrun
-      value: 
-      objectReference: {fileID: 1345818733}
     - target: {fileID: 6426922226739635639, guid: 0d0f89c0f694c2345a22392801d881ea,
         type: 3}
       propertyPath: m_Name
       value: RigidbodyAmongUsPlaceholder
-      objectReference: {fileID: 0}
-    - target: {fileID: 6426922226739635639, guid: 0d0f89c0f694c2345a22392801d881ea,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7451268489106397009, guid: 0d0f89c0f694c2345a22392801d881ea,
-        type: 3}
-      propertyPath: playerAirDrag
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 7451268489106397009, guid: 0d0f89c0f694c2345a22392801d881ea,
-        type: 3}
-      propertyPath: playerGravity
-      value: -20
-      objectReference: {fileID: 0}
-    - target: {fileID: 7451268489106397009, guid: 0d0f89c0f694c2345a22392801d881ea,
-        type: 3}
-      propertyPath: groundDistance
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 7451268489106397009, guid: 0d0f89c0f694c2345a22392801d881ea,
-        type: 3}
-      propertyPath: playerJumpHeight
-      value: 14.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 7451268489106397009, guid: 0d0f89c0f694c2345a22392801d881ea,
-        type: 3}
-      propertyPath: playerCrouchSpeed
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7451268489106397009, guid: 0d0f89c0f694c2345a22392801d881ea,
-        type: 3}
-      propertyPath: playerWallRunSpeed
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 7451268489106397009, guid: 0d0f89c0f694c2345a22392801d881ea,
-        type: 3}
-      propertyPath: playerAirMultiplier
-      value: 0.125
-      objectReference: {fileID: 0}
-    - target: {fileID: 7451268489106397009, guid: 0d0f89c0f694c2345a22392801d881ea,
-        type: 3}
-      propertyPath: playerJumpVelocityLimiter
-      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d0f89c0f694c2345a22392801d881ea, type: 3}
