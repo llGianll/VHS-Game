@@ -487,6 +487,7 @@ MonoBehaviour:
   playerSpeedMultiplier: 10
   playerGroundDrag: 12
   canSprint: 1
+  isRunning: 0
   playerJumpHeight: 14.8
   playerAirMultiplier: 0.125
   playerAirDrag: 0.75
@@ -495,6 +496,7 @@ MonoBehaviour:
   canJump: 1
   slideForce: 40
   slideDrag: 0.5
+  runningSlideForce: 60
   crouchSize: {x: 0.5, y: 0.5, z: 0.5}
   standSize: {x: 1, y: 1, z: 1}
   crouchScale: {x: 0.5, y: 0.5, z: 0.5}
@@ -532,6 +534,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCamHolder: {fileID: 0}
   orientation: {fileID: 7451268488682465395}
+  wallrun: {fileID: 6426922226739635636}
   mouseSensitivityX: 20
   mouseSensitivityY: 20
   xRotation: 0
@@ -552,12 +555,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orientation: {fileID: 7451268488682465395}
   rigidbodyPlayerMovement: {fileID: 7451268489106397009}
-  wallDistance: 0.85
+  wallDistance: 0.95
   minimumJumpHeight: 1.5
   forwardWallJumpVectorDistance: 0.5
+  playerWallRunSpeed: 12
   wallRunGravity: -9.8
-  wallRunJumpForce: 6
-  wallRunTimer: 2
+  horizontalWallRunJumpForce: 7
+  verticalWallRunJumpForce: 3
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 2048
+  isWallRunning: 0
+  mainCamera: {fileID: 0}
+  normalFov: 0
+  wallRunFov: 90
+  fovToWallRunFovTransitionTime: 5
+  wallRunCameraTilt: 15
+  wallRunCameraTiltTime: 5
+  wallRunCameraRotation: 60
+  wallRunCameraRotationTime: 0.5
 --- !u!114 &326369225
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -39,6 +39,7 @@ public class RigidbodyPlayerMovement : MonoBehaviour
     public float playerSpeedMultiplier = 10f;
     public float playerGroundDrag = 12f;
     public bool canSprint = true;
+    public bool isRunning = false;
 
     [Header("Air Movement")]
     public float playerJumpHeight = 3f;
@@ -51,6 +52,7 @@ public class RigidbodyPlayerMovement : MonoBehaviour
     [Header("Crouching and Sliding")]
     public float slideForce = 40f;
     public float slideDrag = 0.5f;
+    public float runningSlideForce = 60f;
     [SerializeField]
     Vector3 crouchSize;
     [SerializeField]
@@ -213,7 +215,12 @@ public class RigidbodyPlayerMovement : MonoBehaviour
         if(Input.GetKey(KeyCode.LeftShift) && isGrounded && isMoving() && !crouchButtonPressed && !isSliding && canSprint)
         {
             playerSpeed = Mathf.Lerp(playerSpeed, playerRunSpeed, playerAcceleration * Time.deltaTime);
+            isRunning = true;
 
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            isRunning = false;
         }
         else if ((crouchButtonPressed || isSliding) && isGrounded)
         {
@@ -225,6 +232,7 @@ public class RigidbodyPlayerMovement : MonoBehaviour
             playerSpeed = Mathf.Lerp(playerSpeed, playerWalkSpeed, playerAcceleration * Time.deltaTime);
 
         }
+        
         
     }
 
@@ -304,6 +312,7 @@ public class RigidbodyPlayerMovement : MonoBehaviour
             {
                 return;
             }
+
             if (!isSliding)
             {
                 canSprint = false;
@@ -312,7 +321,13 @@ public class RigidbodyPlayerMovement : MonoBehaviour
                 transform.position = new Vector3(transform.position.x, transform.position.y - crouchFallDistance/2, transform.position.z);
                 transform.localScale = crouchScale;
                 isCrouching = true;
-                Debug.Log("crouched");
+                if (isRunning)
+                {
+                    float currentForce = rigidBody.velocity.magnitude * 0.45f;
+                    rigidBody.AddForce(movementDirection.normalized * runningSlideForce * currentForce * Time.deltaTime, ForceMode.Impulse);
+                    Debug.Log("boom we slid");
+                }
+                //Debug.Log("crouched");
             }
             if (Input.GetKey(KeyCode.LeftShift) && !isSliding && !crouchButtonPressed)
             {
@@ -336,7 +351,7 @@ public class RigidbodyPlayerMovement : MonoBehaviour
             transform.position = new Vector3(transform.position.x, transform.position.y + (ToSetSize.y - transform.localScale.y), transform.position.z);
             ToSetSize = standSize;
             transform.localScale = normalScale;
-            Debug.Log("uncrouched");
+            //Debug.Log("uncrouched");
             canSprint = true;
             canJump = true;
             isCrouching = false;
@@ -408,4 +423,5 @@ public class RigidbodyPlayerMovement : MonoBehaviour
     {
         playerGravity = storedGravityVal;
     }
+
 }

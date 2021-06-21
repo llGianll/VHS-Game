@@ -9,6 +9,8 @@ public class RigidbodyMouseLook : MonoBehaviour
     [SerializeField]
     Transform orientation;
 
+    [SerializeField] RigidbodyWallrun wallrun;
+
     public float mouseSensitivityX = 100f;
     public float mouseSensitivityY = 100f;
 
@@ -43,8 +45,12 @@ public class RigidbodyMouseLook : MonoBehaviour
 
         xRotation = Mathf.Clamp(xRotation, yAxisClampNegative, yAxisClampPositive);
 
-        playerCamHolder.transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-        orientation.transform.rotation = Quaternion.Euler(0, yRotation, 0);//the piece of code rotating player's body
+        playerCamHolder.transform.rotation = Quaternion.Euler(xRotation, yRotation + wallrun.cameraRotation, wallrun.tilt);
+        if (!wallrun.isWallRunning)
+        {
+            orientation.transform.rotation = Quaternion.Euler(0, yRotation, 0);//the piece of code rotating player's body
+        }
+
 
     }
 }
