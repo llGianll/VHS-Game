@@ -26,11 +26,13 @@ public class RigidbodyControllerRewind : MonoBehaviour, IRewindable
     List<CrouchValues> _crouchValues = new List<CrouchValues>();
 
     RigidbodyPlayerMovement _rbPlayerMovement;
+    RigidbodyWallrun _rbWallrun;
     Rigidbody rb;
 
     private void Awake()
     {
         _rbPlayerMovement = GetComponent<RigidbodyPlayerMovement>();
+        _rbWallrun = GetComponent<RigidbodyWallrun>();
         _orientationT = transform.GetChild(0);
         rb = GetComponent<Rigidbody>();
     }
@@ -57,12 +59,15 @@ public class RigidbodyControllerRewind : MonoBehaviour, IRewindable
 
     public void Rewind()
     {
-        //rb.useGravity = false;
+        _rbPlayerMovement.enabled = false;
+        _rbWallrun.enabled = false;
+        rb.velocity = Vector3.zero;
     }
 
     public void StopRewind()
     {
-        //rb.useGravity = true;
+        _rbPlayerMovement.enabled = true;
+        _rbWallrun.enabled = true;
     }
 
     public void RewindTimePoints()

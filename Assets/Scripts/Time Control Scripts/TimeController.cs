@@ -10,6 +10,7 @@ public class TimeController : MonoBehaviour
 
     private float totalTimeSubtracted;
     private float _accumulatedTimeDelta; //optimization variable 
+    private float _timeElapsed = 0;//accumulator 
 
     public bool IsRewinding { get; private set; }
     public float Timer { get; private set; }
@@ -28,8 +29,9 @@ public class TimeController : MonoBehaviour
 
     [Header("Time variables")]
     [SerializeField] float _rewindTime = 5f;
-    [SerializeField] float _rewindSpeedMult = 5;
+    [SerializeField] float _rewindSpeedMax = 5;
 
+    private float _rewindSpeedMult = 5;
     public float RewindSpeedMult => _rewindSpeedMult;
 
     [Header("Ui variables")]
@@ -69,6 +71,10 @@ public class TimeController : MonoBehaviour
     {
         if (IsRewinding)
         {
+            RewindSpeedMultLerp();
+            if (_rewindSpeedMult < 1)
+                return;
+
             int rewindFrameCount = CountRewindFrames();
             OnRewindUpdate();
             DecreaseTimer(rewindFrameCount);
@@ -82,6 +88,34 @@ public class TimeController : MonoBehaviour
         }
 
         UpdateStatusUI();
+    }
+
+    private void RewindSpeedMultLerp()
+    {
+        float lerpDuration;
+
+        if (Timer >= _rewindTime)
+            lerpDuration = _rewindTime / _rewindSpeedMax;
+        else
+            lerpDuration = Timer / _rewindSpeedMax;
+
+        if (_timeElapsed < lerpDuration)
+        {
+            //_rewindSpeedMult = Mathf.Lerp(0, _rewindSpeedMax, EaseIn(_timeElapsed / lerpDuration));
+            _rewindSpeedMult = Mathf.Lerp(0, _rewindSpeedMax, _timeElapsed / lerpDuration);
+            _timeElapsed += Time.deltaTime;
+        }
+        else
+        {
+            _rewindSpeedMult = _rewindSpeedMax;
+        }
+
+        Debug.Log("RewindSpeedMult:"+_rewindSpeedMult+" , Time elapsed:"+_timeElapsed);
+    }
+
+    private float EaseIn(float t)
+    {
+        return 1f - Mathf.Cos(t * Mathf.PI * 0.5f);
     }
 
     private void IncreaseTimer()
@@ -142,13 +176,9 @@ public class TimeController : MonoBehaviour
 
     private IEnumerator RewindTimer()
     {
-        //Time.timeScale = 0;
-
-        //yield return new WaitForSecondsRealtime(0.5f);
-
-        //Time.timeScale = 1;
-
         totalTimeSubtracted = 0;
+        _timeElapsed = 0;
+        _rewindSpeedMult = 3f;
 
         IsRewinding = true;
 
