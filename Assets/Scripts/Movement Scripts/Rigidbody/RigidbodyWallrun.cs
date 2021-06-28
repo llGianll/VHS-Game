@@ -12,9 +12,11 @@ public class RigidbodyWallrun : MonoBehaviour
 
     public float wallDistance;
     public float minimumJumpHeight;
-    public float forwardWallJumpVectorDistance = 0.5f;
+    //public float forwardWallJumpVectorDistance = 0.5f;
     public float playerWallRunSpeed = 15;
-    
+
+    public Vector3 wallLeftNormal;
+    public Vector3 wallRightNormal;
 
     [SerializeField]
     private float wallRunGravity;
@@ -22,6 +24,8 @@ public class RigidbodyWallrun : MonoBehaviour
     private float horizontalWallRunJumpForce;
     [SerializeField]
     private float verticalWallRunJumpForce;
+    [SerializeField]
+    private float angledWallRunJumpForce;
 
     [SerializeField]
     LayerMask wallMask;
@@ -45,11 +49,12 @@ public class RigidbodyWallrun : MonoBehaviour
 
     bool wallLeft = false;
     bool wallRight = false;
-    bool wallBack = false;
+
+    public bool isLeftWallHit;
+    public bool isRightWallHit;
 
     RaycastHit leftWallHit;
     RaycastHit rightWallHit;
-    RaycastHit backWallHit;
 
     private Rigidbody rigidBody;
 
@@ -71,7 +76,6 @@ public class RigidbodyWallrun : MonoBehaviour
 
         mainCamera = Camera.main;
         normalFov = mainCamera.fieldOfView;
-        //Instantiate(GameObject.CreatePrimitive(PrimitiveType.Sphere), mainCameraHolder.forward);
     }
 
     // Update is called once per frame
@@ -83,12 +87,13 @@ public class RigidbodyWallrun : MonoBehaviour
 
             if (CanWallRun())
             {
-                if (wallLeft || wallRight || wallBack)
+                if (wallLeft || wallRight)
                 {
                     StartWallRun();
                 }
                 else
                 {
+                    NormalizeCameraEffects();
                     StopWallRun();
                 }
             }
@@ -101,38 +106,40 @@ public class RigidbodyWallrun : MonoBehaviour
         if(isWallRunning && rigidbodyPlayerMovement.isGrounded)
         {
             StopWallRun();
+            NormalizeCameraEffects();
         }
 
+        isLeftWallHit = wallLeft;
+        isRightWallHit = wallRight;
     }
 
     void WallCheck()
     {
         wallLeft = Physics.Raycast(transform.position, -orientation.right, out leftWallHit, wallDistance, wallMask);
         wallRight = Physics.Raycast(transform.position, orientation.right, out rightWallHit, wallDistance, wallMask);
-        wallBack = Physics.Raycast(transform.position, -orientation.forward, out backWallHit, wallDistance, wallMask);
 
     }
 
     void StartWallRun()
     {
         rigidbodyPlayerMovement.GravityOff();
-
-        mainCamera.fieldOfView = Mathf.Lerp(mainCamera.fieldOfView, wallRunFov, fovToWallRunFovTransitionTime * Time.deltaTime);
         isWallRunning = true;
+        mainCamera.fieldOfView = Mathf.Lerp(mainCamera.fieldOfView, wallRunFov, fovToWallRunFovTransitionTime * Time.deltaTime);
         
-
         //rigidBody.AddForce(Vector3.down * -wallRunGravity, ForceMode.Acceleration);
         
         rigidbodyPlayerMovement.playerSpeed = Mathf.Lerp(rigidbodyPlayerMovement.playerSpeed, playerWallRunSpeed, rigidbodyPlayerMovement.playerAcceleration * Time.deltaTime);
 
         if (wallLeft)
         {
+            wallLeftNormal = leftWallHit.normal;
             tilt = Mathf.Lerp(tilt, -wallRunCameraTilt, wallRunCameraTiltTime * Time.deltaTime);
             cameraRotation = Mathf.Lerp(cameraRotation, wallRunCameraRotation, wallRunCameraRotationTime * Time.deltaTime);
 
         }
         else if (wallRight)
         {
+            wallRightNormal = rightWallHit.normal;
             tilt = Mathf.Lerp(tilt, wallRunCameraTilt, wallRunCameraTiltTime * Time.deltaTime);
             cameraRotation = Mathf.Lerp(cameraRotation, -wallRunCameraRotation, wallRunCameraRotationTime * Time.deltaTime);
         }
@@ -143,11 +150,12 @@ public class RigidbodyWallrun : MonoBehaviour
             if (wallLeft)
             {
                 Vector3 wallRunJumpDirection = mainCameraHolder.forward; // + leftWallHit.normal; //check if normalized vector3 or not works better
-                //Vector3 wallRunJumpDirection = transform.up + leftWallHit.normal;
+                Vector3 angledWallRunJumpDirection = mainCameraHolder.forward + (Quaternion.Euler(135, 0, 0) * leftWallHit.normal);
                 //Vector3 forwardWallJumpVector = transform.forward + (leftWallHit.normal * forwardWallJumpVectorDistance);
                 //Vector3 wallRunJumpReflectDirection = Vector3.Reflect(forwardWallJumpVector, wallRunJumpDirection);
-                rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y, rigidBody.velocity.z);
+                rigidBody.velocity = new Vector3(rigidBody.velocity.x, 0, rigidBody.velocity.z);
                 rigidBody.AddForce(wallRunJumpDirection* horizontalWallRunJumpForce * 100, ForceMode.Force);
+                rigidBody.AddForce(angledWallRunJumpDirection * angledWallRunJumpForce * 100, ForceMode.Force);
                 rigidBody.AddForce(transform.up * verticalWallRunJumpForce * 100, ForceMode.Force);
                 //rigidBody.AddForce(-wallRunJumpReflectDirection * wallRunJumpForce * 100, ForceMode.Force);
                 Debug.Log("wall jumped from left");
@@ -155,26 +163,15 @@ public class RigidbodyWallrun : MonoBehaviour
             else if (wallRight)
             {
                 Vector3 wallRunJumpDirection = mainCameraHolder.forward; // + rightWallHit.normal; //check if normalized vector3 or not works better
-                //Vector3 wallRunJumpDirection = transform.up + rightWallHit.normal;
+                Vector3 angledWallRunJumpDirection = mainCameraHolder.forward + (Quaternion.Euler(45,0,0) * rightWallHit.normal);
                 //Vector3 forwardWallJumpVector = (transform.forward + new Vector3(forwardWallJumpVectorDistance,0,forwardWallJumpVectorDistance) ) + (rightWallHit.normal);
                 //float wallRunJumpReflectDirection = Vector3.Angle(forwardWallJumpVector, wallRunJumpDirection);
-                rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y, rigidBody.velocity.z);
+                rigidBody.velocity = new Vector3(rigidBody.velocity.x, 0, rigidBody.velocity.z);
                 rigidBody.AddForce(wallRunJumpDirection * horizontalWallRunJumpForce * 100, ForceMode.Force);
+                rigidBody.AddForce(angledWallRunJumpDirection * angledWallRunJumpForce * 100, ForceMode.Force);
                 rigidBody.AddForce(transform.up * verticalWallRunJumpForce * 100, ForceMode.Force);
                 //rigidBody.AddForce(wallRunJumpDirection + new Vector3(wallRunJumpReflectDirection, 0, wallRunJumpReflectDirection) * wallRunJumpForce * 100, ForceMode.Force);
                 Debug.Log("wall jumped from right");
-            }
-            else if (wallBack)
-            {
-                Vector3 wallRunJumpDirection = mainCameraHolder.forward; //+ backWallHit.normal; //check if normalized vector3 or not works better
-                //Vector3 wallRunJumpDirection = transform.up + backWallHit.normal;
-                //Vector3 forwardWallJumpVector = (transform.forward + (backWallHit.normal * forwardWallJumpVectorDistance));
-                //Vector3 wallRunJumpReflectDirection = Vector3.Reflect(forwardWallJumpVector , wallRunJumpDirection);
-                rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y, rigidBody.velocity.z);
-                rigidBody.AddForce(wallRunJumpDirection * horizontalWallRunJumpForce * 100, ForceMode.Force);
-                rigidBody.AddForce(transform.up * verticalWallRunJumpForce * 100, ForceMode.Force);
-                //rigidBody.AddForce(-wallRunJumpReflectDirection * wallRunJumpForce * 100, ForceMode.Force);
-                Debug.Log("wall jumped from back");
             }
             isWallRunning = false;
 
@@ -183,18 +180,20 @@ public class RigidbodyWallrun : MonoBehaviour
 
     }
 
-    void StopWallRun()
+    public void StopWallRun()
     {
         isWallRunning = false;
         rigidbodyPlayerMovement.GravityOn();
-        mainCamera.fieldOfView = Mathf.Lerp(mainCamera.fieldOfView, normalFov, fovToWallRunFovTransitionTime * Time.deltaTime);
-        tilt = Mathf.Lerp(tilt, 0, wallRunCameraTiltTime * Time.deltaTime);
-        cameraRotation = Mathf.Lerp(cameraRotation, 0, wallRunCameraRotationTime * Time.deltaTime);
-        
-
+        NormalizeCameraEffects();
     }
 
     
+    public void NormalizeCameraEffects()
+    {
+        mainCamera.fieldOfView = Mathf.Lerp(mainCamera.fieldOfView, normalFov, fovToWallRunFovTransitionTime * Time.deltaTime);
+        tilt = Mathf.Lerp(tilt, 0, wallRunCameraTiltTime * Time.deltaTime);
+        cameraRotation = Mathf.Lerp(cameraRotation, 0, wallRunCameraRotationTime * Time.deltaTime);
+    }
 
 
 }
