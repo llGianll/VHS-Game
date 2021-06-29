@@ -19,14 +19,12 @@ public class RigidbodyPlayerMovement : MonoBehaviour
     [SerializeField]
     LayerMask groundMask;
 
-    [SerializeField]
-    MoveCamera moveCamera;
 
     public float groundDistance = 0.2f;
     public bool isGrounded;
 
-    float xMovement;
-    float zMovement;
+    public float xMovement;
+    public float zMovement;
     Vector3 movementDirection;
     Vector3 slopeMovementDirection;
 
@@ -62,7 +60,6 @@ public class RigidbodyPlayerMovement : MonoBehaviour
     Vector3 normalScale = new Vector3 (1, 1, 1);
     public bool crouchButtonPressed = false;
     public bool isCrouching = false;
-    public bool isSliding = false;
     bool crouchCooldown = true;
     public float crouchFallDistance;
     public float aboveHeadDistance;
@@ -127,28 +124,12 @@ public class RigidbodyPlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         detectedItemAboveHeadDuringCrouch = Physics.CheckSphere(aboveHeadCheck.position, aboveHeadDistance, groundMask);
 
-        xMovement = Input.GetAxisRaw("Horizontal");
-        zMovement = Input.GetAxisRaw("Vertical");
-
-        movementDirection = orientation.right * xMovement + orientation.forward * zMovement;
-
-        slopeMovementDirection = Vector3.ProjectOnPlane(movementDirection, slopeHit.normal);
-
-        if (isSliding && (Input.GetKeyDown(KeyCode.W)) || (Input.GetKeyDown(KeyCode.S)) || (Input.GetKeyDown(KeyCode.D)) || (Input.GetKeyDown(KeyCode.A)))
-        {
-            StopSlide();
-        }
-
-        if (isSliding == true && rigidBody.velocity.magnitude < 0.5f)
-        {
-            StopSlide();
-        }
+        PlayerInput();
 
         DragControl();
         SpeedControl();
@@ -166,14 +147,8 @@ public class RigidbodyPlayerMovement : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.C) && isGrounded)
         {
-            if(ToSetSize == crouchSize && !isSliding)
+            if(ToSetSize == crouchSize)
             {
-                StopCrouch();
-            }
-
-            if(isSliding)
-            {
-                StopSlide();
                 StopCrouch();
             }
             
@@ -185,10 +160,6 @@ public class RigidbodyPlayerMovement : MonoBehaviour
         if(crouchButtonPressed && Input.GetButtonDown("Jump"))
         {
             StopCrouch();
-            if (isSliding)
-            {
-                StopSlide();
-            }
         }
 
         if(!Input.GetKey(KeyCode.C) && isCrouching && !detectedItemAboveHeadDuringCrouch)
@@ -210,9 +181,17 @@ public class RigidbodyPlayerMovement : MonoBehaviour
     }
 
     //Basic Player Movement
+
+    void PlayerInput()
+    {
+        xMovement = Input.GetAxisRaw("Horizontal");
+        zMovement = Input.GetAxisRaw("Vertical");
+
+        movementDirection = orientation.forward * zMovement + orientation.right * xMovement;
+    }
     void SpeedControl()
     {
-        if(Input.GetKey(KeyCode.LeftShift) && isGrounded && isMoving() && !crouchButtonPressed && !isSliding && canSprint)
+        if(Input.GetKey(KeyCode.LeftShift) && isGrounded && isMoving() && !crouchButtonPressed && canSprint)
         {
             playerSpeed = Mathf.Lerp(playerSpeed, playerRunSpeed, playerAcceleration * Time.deltaTime);
             isRunning = true;
@@ -222,7 +201,7 @@ public class RigidbodyPlayerMovement : MonoBehaviour
         {
             isRunning = false;
         }
-        else if ((crouchButtonPressed || isSliding) && isGrounded)
+        else if (crouchButtonPressed && isGrounded)
         {
             playerSpeed = Mathf.Lerp(playerSpeed, playerCrouchSpeed, playerAcceleration * Time.deltaTime);
 
@@ -238,23 +217,20 @@ public class RigidbodyPlayerMovement : MonoBehaviour
 
     void DragControl()
     {
-        if (isGrounded && !isSliding)
+        if (isGrounded)
         {
             rigidBody.drag = playerGroundDrag;
         }
-        else if(!isGrounded && !isSliding)
+        else if(!isGrounded)
         {
             rigidBody.drag = playerAirDrag;
         }
-        else if(isGrounded && isSliding)
-        {
-            rigidBody.drag = slideDrag;
-        }
+
     }
 
     void PlayerMove()
     {
-        if (isGrounded && !OnSlope() && !isSliding)
+        if (isGrounded)
         {
             rigidBody.AddForce(movementDirection.normalized * playerSpeed * playerSpeedMultiplier, ForceMode.Acceleration);
         }
@@ -262,28 +238,20 @@ public class RigidbodyPlayerMovement : MonoBehaviour
         {
             rigidBody.AddForce(movementDirection.normalized * playerSpeed * playerSpeedMultiplier * playerAirMultiplier, ForceMode.Acceleration);
         }
-        else if(isGrounded && OnSlope() && !isSliding)
-        {
-            rigidBody.AddForce(slopeMovementDirection.normalized * playerSpeed * playerSpeedMultiplier, ForceMode.Acceleration);
-        }
         
         
     }
 
     void PlayerJump()
     {
-        if (isSliding)
-        {
-            StopSlide();
-        }
-
         if (isGrounded && canJump)
         {
-            //Debug.Log("everybody jump");
+            Debug.Log("everybody jump");
             //Vector3 jumpDirection = new Vector3 (mainCameraHolder.forward.x, transform.up.y, mainCameraHolder.forward.z);
-            rigidBody.velocity = new Vector3(rigidBody.velocity.x / playerJumpVelocityLimiter, 0, rigidBody.velocity.z / playerJumpVelocityLimiter);
+            rigidBody.velocity = new Vector3(rigidBody.velocity.x / playerJumpVelocityLimiter, 0 , rigidBody.velocity.z / playerJumpVelocityLimiter);
+            //rigidBody.angularVelocity = new Vector3(rigidBody.velocity.x / playerJumpVelocityLimiter, 0, rigidBody.velocity.z / playerJumpVelocityLimiter);
             //rigidBody.AddForce(jumpDirection * playerJumpHeight, ForceMode.Impulse);
-            rigidBody.AddForce(transform.up.normalized * playerJumpHeight, ForceMode.Impulse);
+            rigidBody.AddForce(transform.up * playerJumpHeight, ForceMode.Impulse);
         }
     }
 
@@ -313,8 +281,6 @@ public class RigidbodyPlayerMovement : MonoBehaviour
                 return;
             }
 
-            if (!isSliding)
-            {
                 canSprint = false;
                 canJump = false;
                 ToSetSize = crouchSize;
@@ -327,13 +293,6 @@ public class RigidbodyPlayerMovement : MonoBehaviour
                     rigidBody.AddForce(movementDirection.normalized * runningSlideForce * currentForce * Time.deltaTime, ForceMode.Impulse);
                     Debug.Log("boom we slid");
                 }
-                //Debug.Log("crouched");
-            }
-            if (Input.GetKey(KeyCode.LeftShift) && !isSliding && !crouchButtonPressed)
-            {
-                StartSlide();
-                return;
-            }
 
             
         }
@@ -342,7 +301,7 @@ public class RigidbodyPlayerMovement : MonoBehaviour
     {
         
         //basic uncrouch
-        if (isSliding || !crouchButtonPressed || !isGrounded || detectedItemAboveHeadDuringCrouch) 
+        if (!crouchButtonPressed || !isGrounded || detectedItemAboveHeadDuringCrouch) 
         {
             return;
         }
@@ -360,38 +319,6 @@ public class RigidbodyPlayerMovement : MonoBehaviour
         StartCoroutine(resetSlideCooldown());
     }
 
-    void StartSlide()
-    {
-        //StartingOurSlide by checking how much force to add (relative to current speed + basic add)
-        float currentForce = rigidBody.velocity.magnitude * 0.45f;
-        isSliding = true;
-        if (OnSlope())
-        {
-            rigidBody.AddForce(slopeMovementDirection.normalized * slideForce * currentForce * Time.deltaTime, ForceMode.Acceleration);
-        }
-        else if (!OnSlope())
-        {
-            rigidBody.AddForce(movementDirection.normalized * slideForce * currentForce * Time.deltaTime, ForceMode.Acceleration);
-        }
-
-
-    }
-
-    void StopSlide()
-    {
-
-        isSliding = false;
-        if (!crouchButtonPressed)
-        {
-            StopCrouch();
-        }
-        StartCoroutine(resetSlideCooldown());
-
-
-        rigidBody.velocity = new Vector3(0, rigidBody.velocity.y, 0);
-
-        //Stopping all of our movement when we stop the slide + uncrouching if we are uncrouched
-    }
 
     private IEnumerator resetSlideCooldown()
     {
@@ -399,18 +326,6 @@ public class RigidbodyPlayerMovement : MonoBehaviour
         crouchCooldown = true;
 
         //Stopping crouch and slide spam
-    }
-
-    void SetSize()
-    {
-        if (!isSliding)
-        {
-            transform.localScale = Vector3.Lerp(transform.localScale, ToSetSize, 5 * Time.deltaTime);
-        }
-        if (isSliding)
-        {
-            transform.localScale = Vector3.Lerp(transform.localScale, ToSetSize, 8 * Time.deltaTime);
-        }
     }
 
 
