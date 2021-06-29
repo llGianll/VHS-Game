@@ -17,11 +17,13 @@ public class TurretTimePoint
     }
 }
 
-public class TurretBase : MonoBehaviour, IRewindable
+public class TurretBase : MonoBehaviour, IRewindable, IShootable
 {
     [SerializeField] float _fireRate = 0.5f;
     [SerializeField] float _projectileSpeed = 5f;
     [SerializeField] GameObject _bullet;
+
+    EnemyHealth _enemyHealth;
 
     Transform _bulletSpawnPoint;
     float _currentTime;
@@ -30,6 +32,7 @@ public class TurretBase : MonoBehaviour, IRewindable
 
     public void Initialize()
     {
+        _enemyHealth = transform.root.GetComponent<EnemyHealth>();
         _bulletSpawnPoint = transform.GetChild(0);
         _currentTime = 0;
     }
@@ -120,5 +123,12 @@ public class TurretBase : MonoBehaviour, IRewindable
     public void RemoveFrame()
     {
         _turretTimePoints.RemoveAt(0);
+    }
+
+    public void Hit(float damage)
+    {
+        SFXPlayer.Instance.PlayClipAtPoint(SFXPresets.TurretHit, transform.position);
+        if(_enemyHealth != null)
+            _enemyHealth.DecreaseHealth(damage);
     }
 }

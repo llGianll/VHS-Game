@@ -17,7 +17,7 @@ public class CubeTimePoint
     }
 }
 
-public class CubeBase : MonoBehaviour, IRewindable
+public class CubeBase : MonoBehaviour, IRewindable, IShootable
 {
     [SerializeField] bool _isRotating = false;
     [SerializeField] Vector3 _rotationVelocity = Vector3.zero;
@@ -43,9 +43,12 @@ public class CubeBase : MonoBehaviour, IRewindable
     }
 
     List<CubeTimePoint> _cubeTimePoints = new List<CubeTimePoint>();
-    
+
+    EnemyHealth _enemyHealth;
+
     public void Initialize()
     {
+        _enemyHealth = transform.root.GetComponent<EnemyHealth>();
         _bulletSpawnPoints = new List<Transform>(transform.GetComponentsInChildren<Transform>(false));
         foreach (Transform transform in _bulletSpawnPoints.ToArray())
         {
@@ -134,5 +137,12 @@ public class CubeBase : MonoBehaviour, IRewindable
     public void RemoveFrame()
     {
         _cubeTimePoints.RemoveAt(0);
+    }
+
+    public void Hit(float damage)
+    {
+        SFXPlayer.Instance.PlayClipAtPoint(SFXPresets.TurretHit, transform.position);
+        if (_enemyHealth != null)
+            _enemyHealth.DecreaseHealth(damage);
     }
 }

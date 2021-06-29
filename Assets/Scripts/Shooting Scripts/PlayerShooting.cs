@@ -33,9 +33,9 @@ public class PlayerShooting : MonoBehaviour, IRewindable
     [SerializeField] float _reloadSpeed = 1f;
     [SerializeField] float _maxFireRate = 0.25f;
 
-    [Header("Shoot Audio Clips")]
-    [SerializeField] AudioClip _shootSFX;
-    [SerializeField] AudioClip _reloadSFX;
+    //[Header("Shoot Audio Sources")]
+    //[SerializeField] AudioSource _shootSFX;
+    //[SerializeField] AudioSource _reloadSFX;
 
     int _currentAmmoInMag;
     float _currentFireTime;
@@ -80,22 +80,7 @@ public class PlayerShooting : MonoBehaviour, IRewindable
     private void Update()
     {
         DrawRay();
-
         _currentFireTime += Time.deltaTime;
-
-        //if (!TimeController.Instance.IsRewinding)
-        //{
-        //    if (Input.GetButtonDown("Fire1") && _currentFireTime >= _maxFireRate)
-        //        Fire();
-        //    else if (Input.GetKeyDown(KeyCode.R) && _currentAmmoInMag != _magCapacity && !_isReloading)
-        //        _reloadCoroutine = StartCoroutine(Reload(0));
-
-        //    RecordTimePoints();
-        //}
-        //else
-        //{
-        //    RewindTimePoints();
-        //}
     }
 
     private IEnumerator Reload(float startTimer)
@@ -103,7 +88,7 @@ public class PlayerShooting : MonoBehaviour, IRewindable
         _reloadTimer = startTimer; 
         _isReloading = true;
 
-        PlaySFX(_reloadSFX);
+        SFXPlayer.Instance.Play(SFXPresets.Reload);
 
         while (_reloadTimer < _reloadSpeed)
         {
@@ -128,7 +113,9 @@ public class PlayerShooting : MonoBehaviour, IRewindable
 
         if (_reloadCoroutine != null)
         {
-            // stop reload and fire a shot
+            // stop reload and fire a shot, stop reload sfx here
+            SFXPlayer.Instance.Stop(SFXPresets.Reload);
+
             StopCoroutine(_reloadCoroutine);
             _isReloading = false;
         }
@@ -140,7 +127,7 @@ public class PlayerShooting : MonoBehaviour, IRewindable
         _currentAmmoInMag--;
         //OnFire(_currentAmmoInMag, _magCapacity);
 
-        PlaySFX(_shootSFX);
+        SFXPlayer.Instance.Play(SFXPresets.Shoot);
 
         if (hit.collider != null && hit.collider.GetComponent<IShootable>() != null)
             hit.collider.GetComponent<IShootable>().Hit(_damagePerBullet);
@@ -149,15 +136,6 @@ public class PlayerShooting : MonoBehaviour, IRewindable
         if (_currentAmmoInMag == 0)
             StartCoroutine(Reload(0));
 
-    }
-
-    private void PlaySFX(AudioClip clip)
-    {
-        if (_audioSource == null)
-            return;
-
-        _audioSource.clip = clip;
-        _audioSource.Play();
     }
 
     public void Rewind()

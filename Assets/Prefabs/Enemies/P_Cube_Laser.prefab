@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 818706305948851424}
   - component: {fileID: 818706305948851425}
   - component: {fileID: 818706305948851426}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 818706306260505317}
   - component: {fileID: 818706306260505319}
   - component: {fileID: 818706306260505318}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Laser (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -313,7 +313,7 @@ GameObject:
   - component: {fileID: 818706306597894564}
   - component: {fileID: 818706306597894566}
   - component: {fileID: 818706306597894565}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Laser (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -464,7 +464,7 @@ GameObject:
   - component: {fileID: 818706306755744800}
   - component: {fileID: 818706306755744802}
   - component: {fileID: 818706306755744801}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Laser (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -615,7 +615,7 @@ GameObject:
   - component: {fileID: 818706306862021592}
   - component: {fileID: 818706306862021594}
   - component: {fileID: 818706306862021593}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Laser (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -768,7 +768,7 @@ GameObject:
   - component: {fileID: 3104917960523462532}
   - component: {fileID: 3104917960523462535}
   - component: {fileID: 3104917960523462538}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -877,8 +877,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3104917960751708862}
-  m_Layer: 0
-  m_Name: P_Cube_Bullet (1)
+  m_Layer: 12
+  m_Name: P_Cube_Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

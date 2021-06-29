@@ -147,6 +147,7 @@ public class RigidbodyWallrun : MonoBehaviour
 
         if (Input.GetButtonDown("Jump"))
         {
+            SFXPlayer.Instance.Play(SFXPresets.Jump);
             if (wallLeft)
             {
                 Vector3 wallRunJumpDirection = mainCameraHolder.forward; // + leftWallHit.normal; //check if normalized vector3 or not works better

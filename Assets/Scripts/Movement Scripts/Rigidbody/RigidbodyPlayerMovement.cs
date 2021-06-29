@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -67,7 +68,9 @@ public class RigidbodyPlayerMovement : MonoBehaviour
 
     Vector3 ToSetSize = Vector3.one;
 
-
+    //[PSEUDO FOOTSTEPS IMPLEMENTATION]
+    float _currentStepTime = 0;
+    SFXPresets _currentStepSFX = SFXPresets.Footstep_1;
 
     RaycastHit slopeHit;
 
@@ -133,6 +136,7 @@ public class RigidbodyPlayerMovement : MonoBehaviour
 
         DragControl();
         SpeedControl();
+        FootStepSFX();
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
@@ -171,6 +175,33 @@ public class RigidbodyPlayerMovement : MonoBehaviour
             canSprint = true;
         }
         
+
+    }
+
+    private void FootStepSFX()
+    {
+        //[PSEUDO FOOTSTEPS IMPLEMENTATION]
+
+        if (!isMoving() || !isGrounded)
+        {
+            _currentStepTime = 0;
+            return;
+        }
+
+        float stepInterval = (isRunning) ? 0.25f : 0.4f;
+
+        if(_currentStepTime == 0)
+        {
+            SFXPlayer.Instance.Play(_currentStepSFX);
+            _currentStepSFX = (_currentStepSFX == SFXPresets.Footstep_1) ? SFXPresets.Footstep_2 : SFXPresets.Footstep_1;
+        }
+
+        _currentStepTime += Time.deltaTime;
+
+        if (_currentStepTime >= stepInterval)
+        {
+            _currentStepTime = 0;
+        }
 
     }
 
@@ -247,6 +278,7 @@ public class RigidbodyPlayerMovement : MonoBehaviour
         if (isGrounded && canJump)
         {
             Debug.Log("everybody jump");
+            SFXPlayer.Instance.Play(SFXPresets.Jump);
             //Vector3 jumpDirection = new Vector3 (mainCameraHolder.forward.x, transform.up.y, mainCameraHolder.forward.z);
             rigidBody.velocity = new Vector3(rigidBody.velocity.x / playerJumpVelocityLimiter, 0 , rigidBody.velocity.z / playerJumpVelocityLimiter);
             //rigidBody.angularVelocity = new Vector3(rigidBody.velocity.x / playerJumpVelocityLimiter, 0, rigidBody.velocity.z / playerJumpVelocityLimiter);

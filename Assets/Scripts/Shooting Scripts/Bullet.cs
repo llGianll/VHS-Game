@@ -66,7 +66,12 @@ public class Bullet : MonoBehaviour, IRewindable, IShootable
         _isActive = false;
 
         if (collision.gameObject.GetComponent<RigidbodyPlayerMovement>())
+        {
+            if(!TimeController.Instance.IsRewinding)
+                SFXPlayer.Instance.Play(SFXPresets.PlayerHit);
+
             TimeController.Instance.Rewind();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -74,7 +79,10 @@ public class Bullet : MonoBehaviour, IRewindable, IShootable
         _isActive = false;
 
         if (other.GetComponent<RigidbodyPlayerMovement>())
+        {
+            SFXPlayer.Instance.Play(SFXPresets.PlayerHit);
             TimeController.Instance.Rewind();
+        }
     }
 
     private void HideObject()

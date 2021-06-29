@@ -110,7 +110,7 @@ public class TimeController : MonoBehaviour
             _rewindSpeedMult = _rewindSpeedMax;
         }
 
-        Debug.Log("RewindSpeedMult:"+_rewindSpeedMult+" , Time elapsed:"+_timeElapsed);
+        //Debug.Log("RewindSpeedMult:"+_rewindSpeedMult+" , Time elapsed:"+_timeElapsed);
     }
 
     private float EaseIn(float t)
@@ -151,8 +151,6 @@ public class TimeController : MonoBehaviour
     {
         if (IsRewinding)
             return;
-
-        Debug.Log("Rewinding");
 
         StartCoroutine(RewindTimer());
     }
