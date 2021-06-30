@@ -48,14 +48,13 @@ public class RigidbodyMouseLook : MonoBehaviour
     }
 
     // Update is called once per frame
+
+    private void FixedUpdate()
+    {
+        MouseLook();
+    }
     void Update()
     {
-        mouseX = Input.GetAxis("Mouse X");
-        mouseY = Input.GetAxis("Mouse Y");
-
-        yRotation += mouseX * mouseSensitivityX;
-        xRotation -= mouseY * mouseSensitivityY;
-
         xRotation = Mathf.Clamp(xRotation, yAxisClampNegative, yAxisClampPositive);
         
 
@@ -86,5 +85,14 @@ public class RigidbodyMouseLook : MonoBehaviour
         }
 
 
+    }
+
+    void MouseLook()
+    {
+        mouseX = Input.GetAxis("Mouse X");
+        mouseY = Input.GetAxis("Mouse Y");
+
+        yRotation += mouseX * mouseSensitivityX;
+        xRotation -= mouseY * mouseSensitivityY;
     }
 }
