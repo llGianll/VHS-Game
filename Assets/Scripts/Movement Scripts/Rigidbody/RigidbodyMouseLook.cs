@@ -49,7 +49,7 @@ public class RigidbodyMouseLook : MonoBehaviour
 
     // Update is called once per frame
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
         MouseLook();
     }

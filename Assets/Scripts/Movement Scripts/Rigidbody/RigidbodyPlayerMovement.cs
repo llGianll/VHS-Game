@@ -35,6 +35,9 @@ public class RigidbodyPlayerMovement : MonoBehaviour
     public float playerRunSpeed = 12f;
     public float playerCrouchSpeed = 3f;
     public float playerAcceleration = 10f;
+    public float playerRunAccel = 10f;
+    public float playerCrouchDecel = 10f;
+    public float playerWalkDecel = 10f;
     public float playerSpeedMultiplier = 10f;
     public float playerGroundDrag = 12f;
     public bool canSprint = true;
@@ -50,8 +53,8 @@ public class RigidbodyPlayerMovement : MonoBehaviour
 
     [Header("Crouching and Sliding")]
     public float slideForce = 40f;
-    public float slideDrag = 0.5f;
     public float runningSlideForce = 60f;
+    public float currentForceMultiplier = 0.45f;
     [SerializeField]
     Vector3 crouchSize;
     [SerializeField]
@@ -138,8 +141,9 @@ public class RigidbodyPlayerMovement : MonoBehaviour
         SpeedControl();
         FootStepSFX();
 
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (Input.GetButtonDown("Jump") && isGrounded && isCrouching == false)
         {
+            canJump = true;
             PlayerJump();
         }
 
@@ -224,7 +228,7 @@ public class RigidbodyPlayerMovement : MonoBehaviour
     {
         if(Input.GetKey(KeyCode.LeftShift) && isGrounded && isMoving() && !crouchButtonPressed && canSprint)
         {
-            playerSpeed = Mathf.Lerp(playerSpeed, playerRunSpeed, playerAcceleration * Time.deltaTime);
+            playerSpeed = Mathf.Lerp(playerSpeed, playerRunSpeed, playerRunAccel * Time.deltaTime);
             isRunning = true;
 
         }
@@ -234,12 +238,12 @@ public class RigidbodyPlayerMovement : MonoBehaviour
         }
         else if (crouchButtonPressed && isGrounded)
         {
-            playerSpeed = Mathf.Lerp(playerSpeed, playerCrouchSpeed, playerAcceleration * Time.deltaTime);
+            playerSpeed = Mathf.Lerp(playerSpeed, playerCrouchSpeed, playerCrouchDecel * Time.deltaTime);;
 
         }
         else if(!Input.GetKey(KeyCode.LeftShift) && isGrounded && !crouchButtonPressed)
         {
-            playerSpeed = Mathf.Lerp(playerSpeed, playerWalkSpeed, playerAcceleration * Time.deltaTime);
+            playerSpeed = Mathf.Lerp(playerSpeed, playerWalkSpeed, playerWalkDecel * Time.deltaTime);
 
         }
         
@@ -248,14 +252,15 @@ public class RigidbodyPlayerMovement : MonoBehaviour
 
     void DragControl()
     {
-        if (isGrounded)
-        {
-            rigidBody.drag = playerGroundDrag;
-        }
-        else if(!isGrounded)
+        if (!isGrounded)
         {
             rigidBody.drag = playerAirDrag;
         }
+        else if (isGrounded)
+        {
+            rigidBody.drag = playerGroundDrag;
+        }
+        
 
     }
 
@@ -277,13 +282,29 @@ public class RigidbodyPlayerMovement : MonoBehaviour
     {
         if (isGrounded && canJump)
         {
+
+            Debug.Log("air drag applied");
+            rigidBody.drag = playerAirDrag;
+            canJump = false;
             Debug.Log("everybody jump");
             SFXPlayer.Instance.Play(SFXPresets.Jump);
+
             //Vector3 jumpDirection = new Vector3 (mainCameraHolder.forward.x, transform.up.y, mainCameraHolder.forward.z);
-            rigidBody.velocity = new Vector3(rigidBody.velocity.x / playerJumpVelocityLimiter, 0 , rigidBody.velocity.z / playerJumpVelocityLimiter);
-            //rigidBody.angularVelocity = new Vector3(rigidBody.velocity.x / playerJumpVelocityLimiter, 0, rigidBody.velocity.z / playerJumpVelocityLimiter);
+
+            rigidBody.velocity = new Vector3(rigidBody.velocity.x / playerJumpVelocityLimiter, 0f, rigidBody.velocity.z / playerJumpVelocityLimiter);
+            //rigidBody.velocity = Vector3.zero;
+
+            rigidBody.angularVelocity = new Vector3(rigidBody.velocity.x / playerJumpVelocityLimiter, 0, rigidBody.velocity.z / playerJumpVelocityLimiter);
+            //rigidBody.angularVelocity = Vector3.zero;
+
             //rigidBody.AddForce(jumpDirection * playerJumpHeight, ForceMode.Impulse);
             rigidBody.AddForce(transform.up * playerJumpHeight, ForceMode.Impulse);
+            //rigidBody.AddForce(0, playerJumpHeight, 0, ForceMode.Impulse);
+            //rigidBody.velocity = new Vector3(rigidBody.velocity.x, playerJumpHeight, rigidBody.velocity.z);
+
+            
+
+            
         }
     }
 
@@ -321,8 +342,8 @@ public class RigidbodyPlayerMovement : MonoBehaviour
                 isCrouching = true;
                 if (isRunning)
                 {
-                    float currentForce = rigidBody.velocity.magnitude * 0.45f;
-                    rigidBody.AddForce(movementDirection.normalized * runningSlideForce * currentForce * Time.deltaTime, ForceMode.Impulse);
+                    float currentForce = rigidBody.velocity.magnitude * currentForceMultiplier;
+                    rigidBody.AddForce(movementDirection.normalized * runningSlideForce * currentForce, ForceMode.Impulse);
                     Debug.Log("boom we slid");
                 }
 
@@ -361,6 +382,7 @@ public class RigidbodyPlayerMovement : MonoBehaviour
     }
 
 
+
     //Gravity
     public void GravityOff()
     {
@@ -370,5 +392,6 @@ public class RigidbodyPlayerMovement : MonoBehaviour
     {
         playerGravity = storedGravityVal;
     }
+
 
 }
