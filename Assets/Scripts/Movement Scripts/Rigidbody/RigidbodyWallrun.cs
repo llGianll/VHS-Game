@@ -26,6 +26,10 @@ public class RigidbodyWallrun : MonoBehaviour
     private float verticalWallRunJumpForce;
     [SerializeField]
     private float angledWallRunJumpForce;
+    [SerializeField]
+    private float leftWallJumpAngle = -45;
+    [SerializeField]
+    private float rightWallJumpAngle = 45;
 
     [SerializeField]
     LayerMask wallMask;
@@ -151,7 +155,7 @@ public class RigidbodyWallrun : MonoBehaviour
             if (wallLeft)
             {
                 Vector3 wallRunJumpDirection = mainCameraHolder.forward; // + leftWallHit.normal; //check if normalized vector3 or not works better
-                Vector3 angledWallRunJumpDirection = mainCameraHolder.forward + (Quaternion.Euler(135, 0, 0) * leftWallHit.normal);
+                Vector3 angledWallRunJumpDirection = mainCameraHolder.forward + (Quaternion.Euler(leftWallJumpAngle, 0, 0) * leftWallHit.normal);
                 //Vector3 forwardWallJumpVector = transform.forward + (leftWallHit.normal * forwardWallJumpVectorDistance);
                 //Vector3 wallRunJumpReflectDirection = Vector3.Reflect(forwardWallJumpVector, wallRunJumpDirection);
                 rigidBody.velocity = new Vector3(rigidBody.velocity.x, 0, rigidBody.velocity.z);
@@ -164,7 +168,7 @@ public class RigidbodyWallrun : MonoBehaviour
             else if (wallRight)
             {
                 Vector3 wallRunJumpDirection = mainCameraHolder.forward; // + rightWallHit.normal; //check if normalized vector3 or not works better
-                Vector3 angledWallRunJumpDirection = mainCameraHolder.forward + (Quaternion.Euler(45,0,0) * rightWallHit.normal);
+                Vector3 angledWallRunJumpDirection = mainCameraHolder.forward + (Quaternion.Euler(rightWallJumpAngle,0,0) * rightWallHit.normal);
                 //Vector3 forwardWallJumpVector = (transform.forward + new Vector3(forwardWallJumpVectorDistance,0,forwardWallJumpVectorDistance) ) + (rightWallHit.normal);
                 //float wallRunJumpReflectDirection = Vector3.Angle(forwardWallJumpVector, wallRunJumpDirection);
                 rigidBody.velocity = new Vector3(rigidBody.velocity.x, 0, rigidBody.velocity.z);
