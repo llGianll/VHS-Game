@@ -82,4 +82,10 @@ MonoBehaviour:
     parent: {fileID: 3870084830192206062}
     amountToPool: 5
     shouldExpand: 1
+  - id: Score Entry
+    prefab: {fileID: 1161714907772296107, guid: def4cd475723d5d49bbd7b28c5c57140,
+      type: 3}
+    parent: {fileID: 3870084830192206062}
+    amountToPool: 5
+    shouldExpand: 1
   pooledObjects: []

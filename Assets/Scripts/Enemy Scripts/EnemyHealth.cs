@@ -11,6 +11,8 @@ public class EnemyHealth : MonoBehaviour, IRewindable
     [SerializeField] float _maxHealth = 30f;
     float _currentHealth;
 
+    [SerializeField] float _scoreOnKill = 250f;
+
     GameObject _enemy;
     List<float> _healthTimePoints = new List<float>();
 
@@ -32,6 +34,7 @@ public class EnemyHealth : MonoBehaviour, IRewindable
         if(_currentHealth <= 0)
         {
             SFXPlayer.Instance.PlayClipAtPoint(SFXPresets.Explosion_1, transform.position);
+            ScoreManager.Instance.AddKillScore(_scoreOnKill);
             IsEnemyActive(false);
         }
     }

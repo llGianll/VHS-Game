@@ -1,0 +1,120 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2811215683860564050
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2811215683860564052}
+  - component: {fileID: 2811215683860564051}
+  - component: {fileID: 2811215683860564055}
+  - component: {fileID: 2811215683860564054}
+  - component: {fileID: 2811215683860564053}
+  - component: {fileID: 2811215683860564056}
+  m_Layer: 0
+  m_Name: Score Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2811215683860564052
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2811215683860564050}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2811215683860564051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2811215683860564050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c77ddc5cee09b6d47a763e1574bd10e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  globalVariable: 0
+  _scoreUID: Score Entry
+  _liveScoreText: {fileID: 0}
+--- !u!114 &2811215683860564055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2811215683860564050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da5096b60be4d1d4f869248c62e6a5ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hitlessInterval: 10
+  _hitScoreMultiplierIncrease: 1
+  _baseHitlessScore: 100
+  _hitlessUIDuration: 2
+  _textColor: {r: 0, g: 1, b: 0.11372549, a: 1}
+--- !u!114 &2811215683860564054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2811215683860564050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 848845c073dd39547b4710e7b03fef70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyKillMultiplierIncrease: 1
+  _UIDuration: 1
+  _textColor: {r: 1, g: 0.21176471, b: 0, a: 1}
+--- !u!114 &2811215683860564053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2811215683860564050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 209340ac161452945b9f9ed7e794175d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _wallrunBaseScore: 50
+  _UIDuration: 1
+  _textColor: {r: 0, g: 1, b: 0.9254902, a: 1}
+--- !u!114 &2811215683860564056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2811215683860564050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ff90aaa447af97439171e39883444c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _endScorePanel: {fileID: 0}
+  _accumulatedText: {fileID: 0}
+  _multiplierText: {fileID: 0}
+  _totalScoreText: {fileID: 0}
+  _scoreTableText: {fileID: 0}
+  _clearTime: {fileID: 0}
+  _rankText: {fileID: 0}
+  _timeBracketData: {fileID: 11400000, guid: c38c2efb06a88a340910ae8eba646741, type: 2}
+  _scoreBracketData: {fileID: 11400000, guid: bd45a5b1800c7ed4ca5fff93881127c7, type: 2}

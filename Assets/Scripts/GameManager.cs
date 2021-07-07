@@ -24,4 +24,10 @@ public class GameManager : Singleton<GameManager>
         }
             
     }
+
+    public void ReachedEndOfLevel()
+    {
+        ScoreManager.Instance.DisplayEndScreen();
+        Time.timeScale = 0;
+    }
 }

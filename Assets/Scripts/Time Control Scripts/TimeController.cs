@@ -14,6 +14,7 @@ public class TimeController : MonoBehaviour
 
     public bool IsRewinding { get; private set; }
     public float Timer { get; private set; }
+    public float RealTime { get; private set; }
     public Action OnRewindBegin = delegate { }; 
     public Action OnRewindEnd = delegate { }; 
     public Action OnRewindUpdate = delegate { };
@@ -69,6 +70,8 @@ public class TimeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        RealTime += Time.deltaTime;
+
         if (IsRewinding)
         {
             RewindSpeedMultLerp();
@@ -210,6 +213,6 @@ public class TimeController : MonoBehaviour
         else
             _statusImg.sprite = _playIcon;
 
-        _timerText.text = string.Format("{0:#.00} secs", Timer);
+        //_timerText.text = string.Format("{0:#.00} secs", Timer);
     }
 }
