@@ -375,7 +375,7 @@ public class RigidbodyPlayerMovement : MonoBehaviour
 
     private IEnumerator resetSlideCooldown()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0);
         crouchCooldown = true;
 
         //Stopping crouch and slide spam
