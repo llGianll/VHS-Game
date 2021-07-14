@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5982477382166816512}
   - component: {fileID: 5982477382166816515}
   - component: {fileID: 5982477382166816575}
+  - component: {fileID: 775925708}
   m_Layer: 0
   m_Name: Level Bottom Trigger
   m_TagString: Untagged
@@ -104,5 +105,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64c1e97947334d34c9f42ce0140ac6fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gizmoColor: {r: 1, g: 0, b: 0, a: 0.6156863}
+--- !u!114 &775925708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5982477382166816514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 645f47bfe80f2f049b43fdd788dc3560, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

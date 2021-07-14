@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _manualRewind: 0
-  _rewindFrameThreshold: 30
+  _rewindFrameThreshold: 20
   _rewindTime: 5
   _rewindSpeedMax: 3
   _statusImg: {fileID: 0}

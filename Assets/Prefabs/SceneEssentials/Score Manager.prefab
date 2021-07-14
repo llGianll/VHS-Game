@@ -116,5 +116,5 @@ MonoBehaviour:
   _scoreTableText: {fileID: 0}
   _clearTime: {fileID: 0}
   _rankText: {fileID: 0}
-  _timeBracketData: {fileID: 11400000, guid: c38c2efb06a88a340910ae8eba646741, type: 2}
+  _timeBracketData: {fileID: 11400000, guid: 26aac978eb68cee43a31c2e9a7bb1aec, type: 2}
   _scoreBracketData: {fileID: 11400000, guid: bd45a5b1800c7ed4ca5fff93881127c7, type: 2}

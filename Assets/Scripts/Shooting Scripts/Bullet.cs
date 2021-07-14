@@ -27,7 +27,8 @@ public class Bullet : MonoBehaviour, IRewindable, IShootable
     {
         _isActive = true;
         _timePoints.Clear();
-        _timeSpawned = TimeController.Instance.Timer;
+        if(TimeController.Instance != null)
+            _timeSpawned = TimeController.Instance.Timer;
     }
 
     private void Start()

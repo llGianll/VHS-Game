@@ -28,6 +28,8 @@ public class TurretBase : MonoBehaviour, IRewindable, IShootable
     Transform _bulletSpawnPoint;
     float _currentTime;
     bool _hasFired = false;
+    public bool AtActiveSector { get; set; }
+
     List<TurretTimePoint> _turretTimePoints = new List<TurretTimePoint>();
 
     public void Initialize()
@@ -55,7 +57,17 @@ public class TurretBase : MonoBehaviour, IRewindable, IShootable
     public void OnUpdate()
     {
         _hasFired = _currentTime >= _fireRate ? true : false;
-        FireBullet();
+        if(SectorOptimization.Instance == null)
+        {
+            //for enemies to still function while the optimization is not applied to the level
+            FireBullet();
+        }
+        else if(SectorOptimization.Instance != null)
+        {
+            //if optimization is already applied to the level and player is at the same sector as the enemy 
+            if (AtActiveSector)
+                FireBullet();
+        }
     }
 
     private void SpawnBullet()

@@ -8,6 +8,8 @@ public class CubeBulletType : CubeBase
     [SerializeField] float _projectileSpeed = 5f;
     [SerializeField] GameObject _bullet;
 
+    public bool AtActiveSector { get; set; }
+
     private void Awake()
     {
         Initialize();
@@ -22,13 +24,23 @@ public class CubeBulletType : CubeBase
     void Update()
     {
         RotateCube();
-        Shooting();
+        this.hasfired = this.currentTime >= _fireRate ? true : false; //check has fired even with optimization code 
+        if (SectorOptimization.Instance == null)
+        {
+            //for enemies to still function while the optimization is not applied to the level
+            Shooting();
+        }
+        else if (SectorOptimization.Instance != null)
+        {
+            //if optimization is already applied to the level and player is at the same sector as the enemy 
+            if (AtActiveSector)
+                Shooting();
+        }
         RewindUpdate();
     }
 
     void Shooting()
     {
-        this.hasfired = this.currentTime >= _fireRate ? true : false;
         if (!TimeController.Instance.IsRewinding)
         {
             if (hasfired)
