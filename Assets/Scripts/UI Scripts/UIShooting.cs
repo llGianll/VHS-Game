@@ -8,6 +8,11 @@ public class UIShooting : MonoBehaviour
 {
     [SerializeField] Text _bulletText;
     [SerializeField] Image _reloadBar;
+    [SerializeField] Image _crosshair;
+
+    [SerializeField] Color _enemyInSight;
+    [SerializeField] Color _enemyOutOfSight;
+
     PlayerShooting _playerShooting;
 
     private void Awake()
@@ -24,6 +29,8 @@ public class UIShooting : MonoBehaviour
             _playerShooting.OnReload += UpdateReloadBar;
             //_playerShooting.OnFinishedReload += UpdateAmmoCount;
         }
+
+        CrosshairColor();
     }
 
     private void UpdateReloadBar(float timer, float reloadSpeed)
@@ -46,6 +53,12 @@ public class UIShooting : MonoBehaviour
     {
         _reloadBar.gameObject.SetActive(_playerShooting.IsReloading);
         UpdateAmmoCount(_playerShooting.CurrentAmmoInMag, _playerShooting.MagCapacity);
+        CrosshairColor();
 
+    }
+
+    private void CrosshairColor()
+    {
+        _crosshair.color = _playerShooting.IsInSightAndShootable ? _enemyInSight : _enemyOutOfSight;
     }
 }

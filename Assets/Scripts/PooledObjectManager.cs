@@ -79,4 +79,9 @@ public class PooledObjectManager : Singleton<PooledObjectManager>
         return null;
     }
 
+    private void Update()
+    {
+        //Debug.Log("No of bullets in pool" + transform.GetChild(0).childCount);
+    }
+
 }

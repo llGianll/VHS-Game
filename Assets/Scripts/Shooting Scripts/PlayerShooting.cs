@@ -33,10 +33,6 @@ public class PlayerShooting : MonoBehaviour, IRewindable
     [SerializeField] float _reloadSpeed = 1f;
     [SerializeField] float _maxFireRate = 0.25f;
 
-    //[Header("Shoot Audio Sources")]
-    //[SerializeField] AudioSource _shootSFX;
-    //[SerializeField] AudioSource _reloadSFX;
-
     int _currentAmmoInMag;
     float _currentFireTime;
     float _reloadTimer;
@@ -47,12 +43,16 @@ public class PlayerShooting : MonoBehaviour, IRewindable
     public int CurrentAmmoInMag { get { return _currentAmmoInMag; } }
     public int MagCapacity { get { return _magCapacity; } }
 
+    public bool IsInSightAndShootable { get; private set; }
+
     //public Action<int, int> OnFire = delegate{};
     public Action<float, float> OnReload = delegate { };
     public Action<int, int> OnFinishedReload = delegate{};
 
     List<ShootingTimePoint> _timePoints = new List<ShootingTimePoint>();
     private AudioSource _audioSource;
+
+    RaycastHit hit;
 
     private void Awake()
     {
@@ -79,7 +79,7 @@ public class PlayerShooting : MonoBehaviour, IRewindable
 
     private void Update()
     {
-        DrawRay();
+        SendRay();
         _currentFireTime += Time.deltaTime;
     }
 
@@ -101,9 +101,11 @@ public class PlayerShooting : MonoBehaviour, IRewindable
         OnFinishedReload(_currentAmmoInMag, _magCapacity);
     }
 
-    private void DrawRay()
+    private void SendRay()
     {
         Debug.DrawRay(_shootingCamera.transform.position, _shootingCamera.transform.forward * _range, Color.green);
+        Physics.Raycast(_shootingCamera.transform.position, _shootingCamera.transform.forward, out hit, _range);
+        IsInSightAndShootable = hit.collider != null && hit.collider.GetComponent<IShootable>() != null;
     }
 
     private void Fire()
@@ -120,8 +122,7 @@ public class PlayerShooting : MonoBehaviour, IRewindable
             _isReloading = false;
         }
 
-        RaycastHit hit;
-        Physics.Raycast(_shootingCamera.transform.position, _shootingCamera.transform.forward, out hit, _range);
+        
 
         _currentFireTime = 0;
         _currentAmmoInMag--;
@@ -129,7 +130,7 @@ public class PlayerShooting : MonoBehaviour, IRewindable
 
         SFXPlayer.Instance.Play(SFXPresets.Shoot);
 
-        if (hit.collider != null && hit.collider.GetComponent<IShootable>() != null)
+        if (IsInSightAndShootable)
             hit.collider.GetComponent<IShootable>().Hit(_damagePerBullet);
 
         //auto reload 
