@@ -32,7 +32,7 @@ public class TurretBase : MonoBehaviour, IRewindable, IShootable
 
     public void Initialize()
     {
-        _enemyHealth = transform.root.GetComponent<EnemyHealth>();
+        _enemyHealth = transform.parent.GetComponent<EnemyHealth>();
         _bulletSpawnPoint = transform.GetChild(0);
         _currentTime = 0;
     }
@@ -55,6 +55,7 @@ public class TurretBase : MonoBehaviour, IRewindable, IShootable
     public void OnUpdate()
     {
         _hasFired = _currentTime >= _fireRate ? true : false;
+        FireBullet();
     }
 
     private void SpawnBullet()
@@ -105,7 +106,6 @@ public class TurretBase : MonoBehaviour, IRewindable, IShootable
 
     public void RecordTimePoints()
     {
-        FireBullet();
 
         _currentTime += Time.deltaTime;
         _turretTimePoints.Add(new TurretTimePoint(_currentTime, _hasFired, gameObject.transform));
