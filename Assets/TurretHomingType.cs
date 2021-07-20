@@ -90,4 +90,10 @@ public class TurretHomingType : TurretBase
             transform.Rotate(Quaternion.Euler(0, 0, _rotateSpeed).eulerAngles * _rotateSpeed * _rotationDirection * Time.deltaTime, Space.Self);
         }
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, _targetRange);
+    }
 }
