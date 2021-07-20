@@ -143,6 +143,6 @@ public class CubeBase : MonoBehaviour, IRewindable, IShootable
     {
         SFXPlayer.Instance.PlayClipAtPoint(SFXPresets.TurretHit, transform.position);
         if (_enemyHealth != null)
-            _enemyHealth.DecreaseHealth(damage);
+            _enemyHealth.DecreaseHealth(damage, false);
     }
 }

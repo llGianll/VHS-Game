@@ -28,7 +28,7 @@ public class TurretRadialType : TurretBase
     {
         OnUpdate();
 
-        if (!TimeController.Instance.IsRewinding)
+        if (!TimeController.Instance.IsRewinding && !_isDisabled)
         {
             RotateTurret();
         }

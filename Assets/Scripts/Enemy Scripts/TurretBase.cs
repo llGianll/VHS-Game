@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class TurretTimePoint
@@ -19,10 +21,17 @@ public class TurretTimePoint
 
 public class TurretBase : MonoBehaviour, IRewindable, IShootable
 {
+    [Header("Disabling Turret")]
+    [SerializeField] bool _disableOnly = true;
+    [SerializeField] float _disableTime = 5f;
+    [SerializeField] Image _activationUI;
+    float _disableTimer = 0;
+
+    [Header("Base turret parameters")]
     [SerializeField] float _fireRate = 0.5f;
     [SerializeField] float _projectileSpeed = 5f;
     [SerializeField] GameObject _bullet;
-    [SerializeField] bool _disableOnly = true;
+
     public bool DisableOnly => _disableOnly;
     protected bool _isDisabled;
 
@@ -59,17 +68,36 @@ public class TurretBase : MonoBehaviour, IRewindable, IShootable
 
     public void OnUpdate()
     {
+        UpdateDisableTimer();
+
         _hasFired = _currentTime >= _fireRate ? true : false;
-        if(SectorOptimization.Instance == null)
+
+        if (_isDisabled)
+            return;
+
+        if (SectorOptimization.Instance == null)
         {
             //for enemies to still function while the optimization is not applied to the level
             FireBullet();
         }
-        else if(SectorOptimization.Instance != null)
+        else if (SectorOptimization.Instance != null)
         {
             //if optimization is already applied to the level and player is at the same sector as the enemy 
             if (AtActiveSector)
                 FireBullet();
+        }
+    }
+
+    private void UpdateDisableTimer()
+    {
+        if (_isDisabled)
+        {
+            _disableTimer -= Time.deltaTime;
+            if (_activationUI != null)
+                _activationUI.fillAmount = 1 - _disableTimer / _disableTime;
+
+            if (_disableTimer <= 0)
+                _isDisabled = false;
         }
     }
 
@@ -143,7 +171,14 @@ public class TurretBase : MonoBehaviour, IRewindable, IShootable
     public void Hit(float damage)
     {
         SFXPlayer.Instance.PlayClipAtPoint(SFXPresets.TurretHit, transform.position);
-        if(_enemyHealth != null)
-            _enemyHealth.DecreaseHealth(damage);
+        if (_enemyHealth != null)
+            _enemyHealth.DecreaseHealth(damage, _isDisabled);
+    }
+
+    public void DisableTurret()
+    {
+        //can't use coroutine for timers as you can't restart its execution upon rewinding
+        _isDisabled = true;
+        _disableTimer = _disableTime;
     }
 }

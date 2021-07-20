@@ -27,15 +27,15 @@ public class EnemyHealth : MonoBehaviour, IRewindable
         TimeControllerEventsInit();
         _currentHealth = _maxHealth;
     }
-    
-    public void DecreaseHealth(float damage)
+
+    public void DecreaseHealth(float damage, bool isDisabled)
     {
-        if (isInvincible)
+        if (isInvincible || isDisabled)
             return;
 
         _currentHealth -= damage;
         _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
-        if(_currentHealth <= 0)
+        if (_currentHealth <= 0)
         {
             SFXPlayer.Instance.PlayClipAtPoint(SFXPresets.Explosion_1, transform.position);
             ScoreManager.Instance.AddKillScore(_scoreOnKill);
@@ -46,7 +46,15 @@ public class EnemyHealth : MonoBehaviour, IRewindable
     private void IsEnemyActive(bool isActive)
     {
         if (_enemy != null)
-            _enemy.SetActive(isActive);
+        {
+            if (_enemy.GetComponent<TurretBase>() != null && _enemy.GetComponent<TurretBase>().DisableOnly)
+            {
+                _currentHealth = _maxHealth; //set to max health for reactivation
+                _enemy.GetComponent<TurretBase>().DisableTurret();
+            }
+            else
+                _enemy.SetActive(isActive);
+        }
     }
 
     public void Rewind()

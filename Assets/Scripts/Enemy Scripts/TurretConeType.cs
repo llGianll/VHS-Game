@@ -33,7 +33,7 @@ public class TurretConeType : TurretBase
     {
         OnUpdate();
 
-        if (!TimeController.Instance.IsRewinding)
+        if (!TimeController.Instance.IsRewinding && !_isDisabled)
         {
             RotateTurret();
         }
@@ -41,7 +41,7 @@ public class TurretConeType : TurretBase
 
     private void RotateTurret()
     {
-        _currentAngle = transform.localEulerAngles.z < 180 ? transform.localEulerAngles.z: transform.localEulerAngles.z - 360;
+        _currentAngle = transform.localEulerAngles.z < 180 ? transform.localEulerAngles.z : transform.localEulerAngles.z - 360;
         //Debug.Log("current turret angle: " + _currentAngle + _rotateClockW);
         //Debug.Log("initial angle: " + _initialAngle);
         //Debug.Log("cw: " + Quaternion.Euler(0, 0, EasingFunction.EaseOutQuad(_initialAngle, _targetAngle, (Mathf.Abs(_currentAngle - _initialAngle) + 1) / _angleRange)).eulerAngles * _rotateSpeed * Time.deltaTime);

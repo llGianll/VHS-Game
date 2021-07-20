@@ -26,10 +26,10 @@ public class TurretHomingType : TurretBase
     private void Awake()
     {
         _initialAngle = (transform.localEulerAngles.z + _startAngle) < 180 ? transform.localEulerAngles.z + _startAngle : transform.localEulerAngles.z + _startAngle - 360; ;
-        
+
         _initialForwardVector = _barrel.position - this.transform.position;
         transform.localRotation = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, _initialAngle);
-        if(_targetObject == null)
+        if (_targetObject == null)
         {
             _targetObject = GameObject.FindGameObjectWithTag("Player");
         }
@@ -50,7 +50,7 @@ public class TurretHomingType : TurretBase
             OnUpdate();
         }
 
-        if (!TimeController.Instance.IsRewinding)
+        if (!TimeController.Instance.IsRewinding && !_isDisabled)
         {
             if (_isTargetinRange)
             {
@@ -61,12 +61,12 @@ public class TurretHomingType : TurretBase
 
     private bool TargetInRange()
     {
-        if(Vector3.Distance(this.transform.position, _targetObject.transform.position) <= _targetRange)
+        if (Vector3.Distance(this.transform.position, _targetObject.transform.position) <= _targetRange)
         {
             _targetDirection = (_targetObject.transform.position - this.transform.position).normalized;
             _targetDirection.Set(_targetDirection.x, 0, _targetDirection.z);
             _targetAngle = Vector3.Angle(_initialForwardVector, _targetDirection);
-            return ((_targetAngle <= _angleRange / 2) && (_targetAngle >= -_angleRange / 2)); 
+            return ((_targetAngle <= _angleRange / 2) && (_targetAngle >= -_angleRange / 2));
         }
         Debug.Log("Distance: " + Vector3.Distance(this.transform.position, _targetObject.transform.position));
         return false;
@@ -83,7 +83,7 @@ public class TurretHomingType : TurretBase
         _targetAngle = Vector3.Angle(_currentForwardVector, _targetDirection);
         Debug.Log("Angle: " + _targetAngle);
 
-        if(_targetAngle > 0.01f)
+        if (_targetAngle > 0.01f)
         {
             _rotationDirection = Vector3.Cross(_currentForwardVector, _targetDirection).y > 0 ? 1 : -1;
             Debug.Log("Direction: " + _rotationDirection);
