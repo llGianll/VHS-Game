@@ -31,6 +31,7 @@ public class ScoreManager : Singleton<ScoreManager>, IRewindable
     HitlessScoring _hitlessScoring;
     WallrunScoring _wallrunScoring;
     EndOfLevelScoring _endOfLevelScoring;
+    [SerializeField] GameObject _scoreCanvas;
 
     [SerializeField] TextMeshProUGUI _liveScoreText;
     public float LiveScore { get; set; }
@@ -49,6 +50,8 @@ public class ScoreManager : Singleton<ScoreManager>, IRewindable
     private void Start()
     {
         TimeControllerEventsInit();
+        if(_scoreCanvas != null)
+            _scoreCanvas.SetActive(true);
     }
 
     private void TimeControllerEventsInit()
