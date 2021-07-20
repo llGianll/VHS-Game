@@ -22,6 +22,9 @@ public class TurretBase : MonoBehaviour, IRewindable, IShootable
     [SerializeField] float _fireRate = 0.5f;
     [SerializeField] float _projectileSpeed = 5f;
     [SerializeField] GameObject _bullet;
+    [SerializeField] bool _disableOnly = true;
+    public bool DisableOnly => _disableOnly;
+    protected bool _isDisabled;
 
     EnemyHealth _enemyHealth;
 

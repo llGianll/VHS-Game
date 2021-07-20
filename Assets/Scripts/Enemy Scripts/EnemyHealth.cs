@@ -8,6 +8,7 @@ public class EnemyHealth : MonoBehaviour, IRewindable
 
     #endregion
 
+    [SerializeField] bool isInvincible = false;
     [SerializeField] float _maxHealth = 30f;
     float _currentHealth;
 
@@ -29,6 +30,9 @@ public class EnemyHealth : MonoBehaviour, IRewindable
     
     public void DecreaseHealth(float damage)
     {
+        if (isInvincible)
+            return;
+
         _currentHealth -= damage;
         _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
         if(_currentHealth <= 0)

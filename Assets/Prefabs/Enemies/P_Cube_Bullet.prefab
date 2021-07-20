@@ -95,7 +95,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7c4664ec38b4019458a955a886a1422b, type: 2}
+  - {fileID: 2100000, guid: f4286dd71fa3126459aeb210806527b6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -310,6 +310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 497ad48f95a8ad440b3f94b7dc7aed88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isInvincible: 1
   _maxHealth: 30
   _scoreOnKill: 250
   _enemy: {fileID: 7589801474928816182}
