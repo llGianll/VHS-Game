@@ -311,3 +311,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 30
+  _scoreOnKill: 250
+  _enemy: {fileID: 7589801474928816182}

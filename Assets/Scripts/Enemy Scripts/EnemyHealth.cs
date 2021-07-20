@@ -13,12 +13,12 @@ public class EnemyHealth : MonoBehaviour, IRewindable
 
     [SerializeField] float _scoreOnKill = 250f;
 
-    GameObject _enemy;
+    [SerializeField] GameObject _enemy;
     List<float> _healthTimePoints = new List<float>();
 
     private void Awake()
     {
-        _enemy = transform.GetChild(0).gameObject;
+        //_enemy = transform.GetChild(0).gameObject;
     }
 
     private void Start()
