@@ -72,6 +72,9 @@ public class TurretBase : MonoBehaviour, IRewindable, IShootable
 
     public void OnUpdate()
     {
+        if (GameManager.isPaused)
+            return;
+
         UpdateActivationUI();
         _hasFired = _currentTime >= _fireRate ? true : false;
 

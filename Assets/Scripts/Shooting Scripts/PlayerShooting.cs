@@ -79,6 +79,9 @@ public class PlayerShooting : MonoBehaviour, IRewindable
 
     private void Update()
     {
+        if (GameManager.isPaused)
+            return;
+
         SendRay();
         _currentFireTime += Time.deltaTime;
     }

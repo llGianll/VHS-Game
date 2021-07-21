@@ -85,6 +85,9 @@ public class RigidbodyWallrun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.isPaused)
+            return;
+
         if (!rigidbodyPlayerMovement.isGrounded)
         {
             WallCheck();

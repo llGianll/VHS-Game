@@ -130,6 +130,8 @@ public class RigidbodyPlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.isPaused)
+            return;
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 

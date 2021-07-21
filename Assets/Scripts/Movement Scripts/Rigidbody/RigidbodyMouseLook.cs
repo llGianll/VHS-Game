@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class RigidbodyMouseLook : MonoBehaviour
 {
@@ -15,8 +16,10 @@ public class RigidbodyMouseLook : MonoBehaviour
     [SerializeField]
     RigidbodyPlayerMovement rigidbodyPlayerMovement;
 
-    public float mouseSensitivityX = 100f;
-    public float mouseSensitivityY = 100f;
+    [SerializeField] GameSettings _gameSettings;
+
+    float mouseSensitivityX = 100f;
+    float mouseSensitivityY = 100f;
 
     float mouseX;
     float mouseY;
@@ -45,16 +48,26 @@ public class RigidbodyMouseLook : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         yRotationNegative = yRotationDefaultNegative;
         yRotationPositive = yRotationDefaultPositive;
+
+        //initialize mouse sensitivity based on client game settings
     }
 
     // Update is called once per frame
 
     private void LateUpdate()
     {
+        if (GameManager.isPaused)
+            return;
+
         MouseLook();
     }
     void Update()
     {
+        ModifyMouseSensitivity();
+
+        if (GameManager.isPaused)
+            return;
+
         xRotation = Mathf.Clamp(xRotation, yAxisClampNegative, yAxisClampPositive);
         
 
@@ -85,6 +98,12 @@ public class RigidbodyMouseLook : MonoBehaviour
         }
 
 
+    }
+
+    private void ModifyMouseSensitivity()
+    {
+        mouseSensitivityX = _gameSettings.mouseSensitivityX;
+        mouseSensitivityY = _gameSettings.mouseSensitivityY;
     }
 
     void MouseLook()

@@ -70,6 +70,9 @@ public class TimeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.isPaused)
+            return;
+
         RealTime += Time.deltaTime;
 
         if (IsRewinding)

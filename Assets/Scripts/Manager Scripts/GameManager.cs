@@ -7,10 +7,39 @@ public class GameManager : Singleton<GameManager>
     int _rewindsLeft = 0;
 
     public int RewindsLeft => _rewindsLeft;
+    public static bool isPaused;
 
     private void Start()
     {
         _rewindsLeft = _maxRewinds;
+        isPaused = false;
+        Cursor.visible = false;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            isPaused = !isPaused;
+            PauseGame();
+        }
+
+    }
+
+    private void PauseGame()
+    {
+        if (isPaused)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Time.timeScale = 0;
+            Cursor.visible = true;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Time.timeScale = 1;
+            Cursor.visible = false;
+        }
     }
 
     public void DecreaseRewind()
