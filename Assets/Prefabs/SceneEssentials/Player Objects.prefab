@@ -215,6 +215,12 @@ PrefabInstance:
       objectReference: {fileID: 3645208963944292179}
     - target: {fileID: 6426922226739635638, guid: 0d0f89c0f694c2345a22392801d881ea,
         type: 3}
+      propertyPath: _gameSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: da3d0013c3c281347b3ec5ab224597d6,
+        type: 2}
+    - target: {fileID: 6426922226739635638, guid: 0d0f89c0f694c2345a22392801d881ea,
+        type: 3}
       propertyPath: playerCamHolder
       value: 
       objectReference: {fileID: 923054019947399800}

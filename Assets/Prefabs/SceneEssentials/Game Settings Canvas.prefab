@@ -440,8 +440,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   globalVariable: 0
   _gameSettingsPanel: {fileID: 5741583209875249455}
-  _clientSettings: {fileID: 11400000, guid: e28492bf03bafab4d87dad78903a99c7, type: 2}
-  _defaultSettings: {fileID: 11400000, guid: 1c83c14b6833d774ca773948e2a856f4, type: 2}
+  _clientSettings: {fileID: 11400000, guid: da3d0013c3c281347b3ec5ab224597d6, type: 2}
+  _defaultSettings: {fileID: 11400000, guid: 23963a4aa29da8247ad9dcdee64aa09a, type: 2}
   _mouseSenseX: {fileID: 5741583209672878858}
   _mouseSenseY: {fileID: 5741583208444936490}
 --- !u!1 &5741583208701976256
