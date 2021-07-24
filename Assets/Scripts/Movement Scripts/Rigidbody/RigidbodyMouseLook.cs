@@ -48,7 +48,7 @@ public class RigidbodyMouseLook : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         yRotationNegative = yRotationDefaultNegative;
         yRotationPositive = yRotationDefaultPositive;
-
+        yRotation = transform.localEulerAngles.y; //set yRotation based on how player model is oriented at the start
         //initialize mouse sensitivity based on client game settings
     }
 
@@ -69,8 +69,8 @@ public class RigidbodyMouseLook : MonoBehaviour
             return;
 
         xRotation = Mathf.Clamp(xRotation, yAxisClampNegative, yAxisClampPositive);
-        
 
+        //Debug.Log(yRotation);
         playerCamHolder.transform.rotation = Quaternion.Euler(xRotation, yRotation, wallrun.tilt);
         if (!wallrun.isWallRunning)
         {
