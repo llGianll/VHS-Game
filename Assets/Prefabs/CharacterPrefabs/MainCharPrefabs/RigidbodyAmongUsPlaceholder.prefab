@@ -442,9 +442,7 @@ MonoBehaviour:
   orientation: {fileID: 7451268488682465395}
   wallrun: {fileID: 6426922226739635636}
   rigidbodyPlayerMovement: {fileID: 7451268489106397009}
-  _gameSettings: {fileID: 11400000, guid: e28492bf03bafab4d87dad78903a99c7, type: 2}
-  mouseSensitivityX: 8
-  mouseSensitivityY: 8
+  _gameSettings: {fileID: 11400000, guid: da3d0013c3c281347b3ec5ab224597d6, type: 2}
   xRotation: 0
   yRotation: 0
   yRotationClamped: 0

@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   globalVariable: 0
   _scoreUID: Score Entry
+  _scoreCanvas: {fileID: 0}
   _liveScoreText: {fileID: 0}
 --- !u!114 &2811215683860564055
 MonoBehaviour:

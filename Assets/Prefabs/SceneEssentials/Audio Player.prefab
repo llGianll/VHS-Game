@@ -1,5 +1,146 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1799488288083285918
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6034604652542783423}
+  - component: {fileID: 949710783810313074}
+  - component: {fileID: 4512185567498057351}
+  m_Layer: 0
+  m_Name: Level BGM
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6034604652542783423
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1799488288083285918}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7282670611916187461}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &949710783810313074
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1799488288083285918}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: -7234254467096405826, guid: e33643dd66b844844b7dd459b1ab0b4b,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: 240fd2bf8ec45af439252a8a8e54594e, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.5
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &4512185567498057351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1799488288083285918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f348c21df765ef42890b1eed8a73503, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7282670611764552347
 GameObject:
   m_ObjectHideFlags: 0
@@ -10,6 +151,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7282670611764552345}
   - component: {fileID: 7282670611764552346}
+  - component: {fileID: 8535506105216897222}
   m_Layer: 0
   m_Name: Reload SFX
   m_TagString: Untagged
@@ -40,7 +182,8 @@ AudioSource:
   m_GameObject: {fileID: 7282670611764552347}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -2259730087327792849, guid: e33643dd66b844844b7dd459b1ab0b4b,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: c75f342b7057c1d4aad36169c89a1ad0, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -127,6 +270,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8535506105216897222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7282670611764552347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f348c21df765ef42890b1eed8a73503, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7282670611779960843
 GameObject:
   m_ObjectHideFlags: 0
@@ -137,6 +292,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7282670611779960842}
   - component: {fileID: 7282670611779960841}
+  - component: {fileID: 7663921212096788158}
   m_Layer: 0
   m_Name: Footstep 2 SFX
   m_TagString: Untagged
@@ -167,7 +323,8 @@ AudioSource:
   m_GameObject: {fileID: 7282670611779960843}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -2259730087327792849, guid: e33643dd66b844844b7dd459b1ab0b4b,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 749b26a3fff373f439fdacf457837f6e, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -254,6 +411,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7663921212096788158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7282670611779960843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f348c21df765ef42890b1eed8a73503, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7282670611916187462
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,7 +434,7 @@ GameObject:
   - component: {fileID: 7282670611916187461}
   - component: {fileID: 7282670611916187482}
   m_Layer: 0
-  m_Name: SFX Player
+  m_Name: Audio Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -290,6 +459,7 @@ Transform:
   - {fileID: 7282670611942874262}
   - {fileID: 7282670611779960842}
   - {fileID: 7282670612823628162}
+  - {fileID: 6034604652542783423}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -333,6 +503,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7282670611942874262}
   - component: {fileID: 7282670611942874261}
+  - component: {fileID: 4405062532523629172}
   m_Layer: 0
   m_Name: Footstep 1 SFX
   m_TagString: Untagged
@@ -363,7 +534,8 @@ AudioSource:
   m_GameObject: {fileID: 7282670611942874263}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -2259730087327792849, guid: e33643dd66b844844b7dd459b1ab0b4b,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: abaa042719e0c374b84099130852f804, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -450,6 +622,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4405062532523629172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7282670611942874263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f348c21df765ef42890b1eed8a73503, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7282670612185393142
 GameObject:
   m_ObjectHideFlags: 0
@@ -460,6 +644,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7282670612185393140}
   - component: {fileID: 7282670612185393141}
+  - component: {fileID: 5134197033386889246}
   m_Layer: 0
   m_Name: Jump SFX
   m_TagString: Untagged
@@ -490,7 +675,8 @@ AudioSource:
   m_GameObject: {fileID: 7282670612185393142}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -2259730087327792849, guid: e33643dd66b844844b7dd459b1ab0b4b,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: a2ba9b5bd00862548ba4eb02cb68e651, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -577,6 +763,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5134197033386889246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7282670612185393142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f348c21df765ef42890b1eed8a73503, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7282670612328640863
 GameObject:
   m_ObjectHideFlags: 0
@@ -587,6 +785,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7282670612328640861}
   - component: {fileID: 7282670612328640862}
+  - component: {fileID: 8659170564946130204}
   m_Layer: 0
   m_Name: Shoot SFX
   m_TagString: Untagged
@@ -617,7 +816,8 @@ AudioSource:
   m_GameObject: {fileID: 7282670612328640863}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -2259730087327792849, guid: e33643dd66b844844b7dd459b1ab0b4b,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: f52afeeddc8a00140982db6a4f035669, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -704,6 +904,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8659170564946130204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7282670612328640863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f348c21df765ef42890b1eed8a73503, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7282670612823628172
 GameObject:
   m_ObjectHideFlags: 0
@@ -714,6 +926,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7282670612823628162}
   - component: {fileID: 7282670612823628163}
+  - component: {fileID: 857871033437833626}
   m_Layer: 0
   m_Name: 'Explosion 1 '
   m_TagString: Untagged
@@ -744,7 +957,8 @@ AudioSource:
   m_GameObject: {fileID: 7282670612823628172}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -2259730087327792849, guid: e33643dd66b844844b7dd459b1ab0b4b,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: a6d5cc3782531a844a949f2f18a43230, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -831,6 +1045,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &857871033437833626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7282670612823628172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f348c21df765ef42890b1eed8a73503, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7282670613123361307
 GameObject:
   m_ObjectHideFlags: 0
@@ -841,6 +1067,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7282670613123361305}
   - component: {fileID: 7282670613123361306}
+  - component: {fileID: 4209881192828506248}
   m_Layer: 0
   m_Name: Player Hit SFX
   m_TagString: Untagged
@@ -871,7 +1098,8 @@ AudioSource:
   m_GameObject: {fileID: 7282670613123361307}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -2259730087327792849, guid: e33643dd66b844844b7dd459b1ab0b4b,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: c3456510d301cce46a2374f41c2bad02, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -958,6 +1186,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4209881192828506248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7282670613123361307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f348c21df765ef42890b1eed8a73503, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7282670613492951160
 GameObject:
   m_ObjectHideFlags: 0
@@ -968,6 +1208,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7282670613492951166}
   - component: {fileID: 7282670613492951167}
+  - component: {fileID: 1154682372002021441}
   m_Layer: 0
   m_Name: Turret Hit SFX
   m_TagString: Untagged
@@ -998,7 +1239,8 @@ AudioSource:
   m_GameObject: {fileID: 7282670613492951160}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -2259730087327792849, guid: e33643dd66b844844b7dd459b1ab0b4b,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 9725de2d99b3a50468d7eee4bd6ecc54, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -1085,3 +1327,15 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1154682372002021441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7282670613492951160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f348c21df765ef42890b1eed8a73503, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -14,6 +14,7 @@ public class GameManager : Singleton<GameManager>
         _rewindsLeft = _maxRewinds;
         isPaused = false;
         Cursor.visible = false;
+        Time.timeScale = 1;
     }
 
     private void Update()
@@ -59,4 +60,6 @@ public class GameManager : Singleton<GameManager>
         ScoreManager.Instance.DisplayEndScreen();
         Time.timeScale = 0;
     }
+
+    
 }
