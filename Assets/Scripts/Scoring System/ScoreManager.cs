@@ -69,9 +69,9 @@ public class ScoreManager : Singleton<ScoreManager>, IRewindable
         _liveScoreText.text =  "Score: " + LiveScore.ToString();
     }
 
-    public void AddKillScore(float score)
+    public void AddKillScore(float score, bool increaseMult)
     {
-        _killScoring.AddKillScore(score);
+        _killScoring.AddKillScore(score, increaseMult);
     }
 
     public Color GetMultiplierUIColor(ScoreType scoreType)

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,6 +14,7 @@ public class EnemyHealth : MonoBehaviour, IRewindable
     float _currentHealth;
 
     [SerializeField] float _scoreOnKill = 250f;
+    [SerializeField] float _diminishedScore = 50f;
 
     [SerializeField] GameObject _enemy;
     List<float> _healthTimePoints = new List<float>();
@@ -38,9 +40,31 @@ public class EnemyHealth : MonoBehaviour, IRewindable
         if (_currentHealth <= 0)
         {
             SFXPlayer.Instance.PlayClipAtPoint(SFXPresets.Explosion_1, transform.position);
-            ScoreManager.Instance.AddKillScore(_scoreOnKill);
+
+            float score = GetEquivalentScore();
+
+            if(_enemy.GetComponent<TurretBase>() != null)
+                ScoreManager.Instance.AddKillScore(score, _enemy.GetComponent<TurretBase>()._noOfTimesDisabled < 1);
+            else
+                ScoreManager.Instance.AddKillScore(score, true);
+
+
             IsEnemyActive(false);
         }
+    }
+
+    private float GetEquivalentScore()
+    {
+        float score = 0;
+        if(_enemy != null)
+        {
+            if(_enemy.GetComponent<TurretBase>() != null && _enemy.GetComponent<TurretBase>().DisableOnly)
+            {
+                score = (_enemy.GetComponent<TurretBase>()._noOfTimesDisabled >= 1) ? _diminishedScore : _scoreOnKill;
+            }
+        }
+
+        return score;
     }
 
     private void IsEnemyActive(bool isActive)

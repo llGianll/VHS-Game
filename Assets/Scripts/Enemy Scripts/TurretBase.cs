@@ -12,14 +12,16 @@ public class TurretTimePoint
     public Vector3 Rotation;
     public bool IsDisabled;
     public float DisableTimer;
+    public int NoOfTimesDisabled;
 
-    public TurretTimePoint(float CurrentTime, bool HasFired, Transform transform, bool isDisabled, float disableTimer)
+    public TurretTimePoint(float CurrentTime, bool HasFired, Transform transform, bool isDisabled, float disableTimer, int noOfTimesDisabled)
     {
         this.CurrentTime = CurrentTime;
         this.HasFired = HasFired;
         this.Rotation = transform.localEulerAngles;
         this.IsDisabled = isDisabled;
         this.DisableTimer = disableTimer;
+        this.NoOfTimesDisabled = noOfTimesDisabled;
     }
 }
 
@@ -38,6 +40,7 @@ public class TurretBase : MonoBehaviour, IRewindable, IShootable
 
     public bool DisableOnly => _disableOnly;
     protected bool _isDisabled;
+    public int _noOfTimesDisabled = 0;
 
     EnemyHealth _enemyHealth;
 
@@ -153,6 +156,7 @@ public class TurretBase : MonoBehaviour, IRewindable, IShootable
                 gameObject.transform.localEulerAngles = _turretTimePoints[0].Rotation;
                 _isDisabled = _turretTimePoints[0].IsDisabled;
                 _disableTimer = _turretTimePoints[0].DisableTimer;
+                _noOfTimesDisabled = _turretTimePoints[0].NoOfTimesDisabled;
                 _turretTimePoints.Clear();
             }
             else
@@ -161,6 +165,7 @@ public class TurretBase : MonoBehaviour, IRewindable, IShootable
                 gameObject.transform.localEulerAngles = _turretTimePoints[_turretTimePoints.Count - timeIndex].Rotation;
                 _isDisabled = _turretTimePoints[_turretTimePoints.Count - timeIndex].IsDisabled;
                 _disableTimer = _turretTimePoints[_turretTimePoints.Count - timeIndex].DisableTimer;
+                _noOfTimesDisabled = _turretTimePoints[_turretTimePoints.Count - timeIndex].NoOfTimesDisabled;
 
                 for (int i = 0; i < timeIndex; i++)
                 {
@@ -178,7 +183,7 @@ public class TurretBase : MonoBehaviour, IRewindable, IShootable
     {
         UpdateDisableTimer();
         _currentTime += Time.deltaTime;
-        _turretTimePoints.Add(new TurretTimePoint(_currentTime, _hasFired, gameObject.transform, _isDisabled , _disableTimer));
+        _turretTimePoints.Add(new TurretTimePoint(_currentTime, _hasFired, gameObject.transform, _isDisabled , _disableTimer, _noOfTimesDisabled));
     }
 
     private void FireBullet()
@@ -207,5 +212,6 @@ public class TurretBase : MonoBehaviour, IRewindable, IShootable
         //can't use coroutine for timers as you can't restart its execution upon rewinding
         _isDisabled = true;
         _disableTimer = _disableTime;
+        _noOfTimesDisabled++;
     }
 }

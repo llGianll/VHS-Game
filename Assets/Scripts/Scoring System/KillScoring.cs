@@ -23,15 +23,18 @@ public class KillScoring : MonoBehaviour
         Multiplier = 0;
     }
 
-    public void AddKillScore(float score)
+    public void AddKillScore(float score, bool increaseMult)
     {
-        StartCoroutine(DisplayKill(score));
+        StartCoroutine(DisplayKill(score, increaseMult));
     }
 
-    IEnumerator DisplayKill(float score)
+    IEnumerator DisplayKill(float score, bool increaseMult)
     {
         float timeElapsed = 0;
-        IncreaseMultiplierOnKill();
+
+        if(increaseMult)
+            IncreaseMultiplierOnKill();
+
         float killTotal = score * Multiplier;
 
         GameObject _killUI = PooledObjectManager.Instance.GetPooledObject(ScoreManager.Instance.ScoreUID);
