@@ -18,15 +18,15 @@ public class LevelManager : Singleton<LevelManager>
         SceneManager.LoadScene("Main Menu");
     }
 
-    public void LoadLevel(int buildIndex)
+    public void LoadLevel(string sceneName)
     {
-        SceneManager.LoadScene(buildIndex);
+        SceneManager.LoadScene(sceneName);
     }
 
     public void PlayButton()
     {
-        if(_gameSettings != null)
-            _gameSettings.LoadGameSettings();
+        //if(_gameSettings != null)
+        //    _gameSettings.LoadGameSettings();
 
         SceneManager.LoadScene("Level_Select");
     }
