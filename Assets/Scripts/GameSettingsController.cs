@@ -53,8 +53,6 @@ public class GameSettingsController : Singleton<GameSettingsController>
 
     private void InitialClientSettings()
     {
-        _clientSettings.LoadGameSettings();
-
         _mouseSenseX.InitializeUIValues(_clientSettings.mouseSensitivityX);
         _mouseSenseY.InitializeUIValues(_clientSettings.mouseSensitivityY);
 

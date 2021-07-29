@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : Singleton<LevelManager>
 {
+    [SerializeField] GameSettings _gameSettings;
+
     public void RestartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -13,7 +15,20 @@ public class LevelManager : Singleton<LevelManager>
 
     public void ReturnToMainMenu()
     {
+        SceneManager.LoadScene("Main Menu");
+    }
 
+    public void LoadLevel(int buildIndex)
+    {
+        SceneManager.LoadScene(buildIndex);
+    }
+
+    public void PlayButton()
+    {
+        if(_gameSettings != null)
+            _gameSettings.LoadGameSettings();
+
+        SceneManager.LoadScene("Level_Select");
     }
 
     public void ExitGame()

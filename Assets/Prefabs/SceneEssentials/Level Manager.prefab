@@ -44,3 +44,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   globalVariable: 0
+  _gameSettings: {fileID: 11400000, guid: da3d0013c3c281347b3ec5ab224597d6, type: 2}
