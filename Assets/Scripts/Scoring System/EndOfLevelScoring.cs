@@ -18,6 +18,7 @@ public class EndOfLevelScoring : MonoBehaviour
     [Header("Scriptable Objects")]
     [SerializeField] TimeBracketData _timeBracketData;
     [SerializeField] ScoreBracketData _scoreBracketData;
+    [SerializeField] LevelScoreData _levelScoreData;
 
     int _endMultiplier;
     int _totalScore;
@@ -95,6 +96,10 @@ public class EndOfLevelScoring : MonoBehaviour
         _clearTime.text = ((int)(TimeController.Instance.RealTime / 60)).ToString() + ":"
             + ((int)(TimeController.Instance.RealTime % 60)).ToString("00");
         _rankText.text = _rank;
+
+        //save score to playerprefs 
+        if(_levelScoreData != null)
+            _levelScoreData.SaveHighScore(_totalScore);
 
         _endScorePanel.SetActive(true);
     }

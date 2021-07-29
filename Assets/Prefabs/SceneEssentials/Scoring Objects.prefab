@@ -121,6 +121,12 @@ PrefabInstance:
       objectReference: {fileID: 7178880504911998075}
     - target: {fileID: 2811215683860564056, guid: 2c2912dc16fc0e74785f7b52821ce2fd,
         type: 3}
+      propertyPath: _levelScoreData
+      value: 
+      objectReference: {fileID: 11400000, guid: a7fc4e4b17b5e03499ec42df503d6318,
+        type: 2}
+    - target: {fileID: 2811215683860564056, guid: 2c2912dc16fc0e74785f7b52821ce2fd,
+        type: 3}
       propertyPath: _multiplierText
       value: 
       objectReference: {fileID: 7178880504332845029}
@@ -442,7 +448,7 @@ PrefabInstance:
     - target: {fileID: 4772206208436168194, guid: cacef7ac363506b42af131135461079f,
         type: 3}
       propertyPath: m_fontSize
-      value: 40.95
+      value: 40.9
       objectReference: {fileID: 0}
     - target: {fileID: 4772206208499836865, guid: cacef7ac363506b42af131135461079f,
         type: 3}
