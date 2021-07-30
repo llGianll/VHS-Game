@@ -1570,6 +1570,27 @@ PrefabInstance:
       propertyPath: m_text
       value: Rooftops
       objectReference: {fileID: 0}
+    - target: {fileID: 347316150073705303, guid: 70fd85eec28eb0f47862d7f08e4241ae,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0d75332ffcc90394c89bafeded660d3b,
+        type: 3}
+    - target: {fileID: 347316150073705303, guid: 70fd85eec28eb0f47862d7f08e4241ae,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 347316150073705303, guid: 70fd85eec28eb0f47862d7f08e4241ae,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 347316150073705303, guid: 70fd85eec28eb0f47862d7f08e4241ae,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 347316150680364089, guid: 70fd85eec28eb0f47862d7f08e4241ae,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1954,6 +1975,27 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2935660036586897347}
     m_Modifications:
+    - target: {fileID: 347316150073705303, guid: 70fd85eec28eb0f47862d7f08e4241ae,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0906602b0cfbcc8418907fabb8ab8aaa,
+        type: 3}
+    - target: {fileID: 347316150073705303, guid: 70fd85eec28eb0f47862d7f08e4241ae,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 347316150073705303, guid: 70fd85eec28eb0f47862d7f08e4241ae,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 347316150073705303, guid: 70fd85eec28eb0f47862d7f08e4241ae,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 347316150680364089, guid: 70fd85eec28eb0f47862d7f08e4241ae,
         type: 3}
       propertyPath: m_Pivot.x

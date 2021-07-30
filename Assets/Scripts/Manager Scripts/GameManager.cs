@@ -8,6 +8,7 @@ public class GameManager : Singleton<GameManager>
 
     public int RewindsLeft => _rewindsLeft;
     public static bool isPaused;
+    public bool endOfLevel = false;
 
     private void Start()
     {
@@ -35,7 +36,7 @@ public class GameManager : Singleton<GameManager>
             Time.timeScale = 0;
             Cursor.visible = true;
         }
-        else
+        else if(!isPaused && !endOfLevel)
         {
             Cursor.lockState = CursorLockMode.Locked;
             Time.timeScale = 1;

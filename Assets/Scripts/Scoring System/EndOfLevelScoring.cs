@@ -101,6 +101,10 @@ public class EndOfLevelScoring : MonoBehaviour
         if(_levelScoreData != null)
             _levelScoreData.SaveHighScore(_totalScore);
 
+        GameManager.Instance.endOfLevel = true;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
         _endScorePanel.SetActive(true);
     }
 
