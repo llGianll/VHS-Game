@@ -68,7 +68,7 @@ public class TurretHomingType : TurretBase
             _targetAngle = Vector3.Angle(_initialForwardVector, _targetDirection);
             return ((_targetAngle <= _angleRange / 2) && (_targetAngle >= -_angleRange / 2));
         }
-        Debug.Log("Distance: " + Vector3.Distance(this.transform.position, _targetObject.transform.position));
+        //Debug.Log("Distance: " + Vector3.Distance(this.transform.position, _targetObject.transform.position));
         return false;
     }
 
